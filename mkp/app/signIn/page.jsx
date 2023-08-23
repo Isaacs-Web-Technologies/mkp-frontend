@@ -103,7 +103,7 @@ const SignUpPage = () => {
         </button>
       </form>
 
-    <p className="top-[31.63rem] text-center">Already have an account? <Link href="./signIn" className="underline text-blue-600">Login</Link></p>
+    <p className="top-[31.63rem] text-center">Don't have an account? <Link href="./signUp" className="underline text-blue-600">Signup</Link></p>
     <div className="absolute top-[35.75rem] left-[0.25rem] w-[36.75rem] h-[2.25rem]">
     <div className="absolute top-[1.09rem] left-[-0.03rem] box-border w-[15.63rem] h-[0.06rem] border-t-[1px] border-solid border-black" />
     <div className="absolute top-[1.09rem] left-[21.16rem] box-border w-[15.63rem] h-[0.06rem] border-t-[1px] border-solid border-black" />
