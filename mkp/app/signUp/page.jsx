@@ -94,6 +94,34 @@ const SignUpPage = () => {
             required
           />
         </div>
+
+         {/* Password Input */}
+         <div className="h-full px-3 py-2 mb-5 mt-5 border-[1px] border-solid border-primary">
+          <input
+            type="password"
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            name="password"
+            className="form-input mt-1 block w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
+            placeholder="XXXXXXXXXX"
+            required
+          />
+        </div>
+
+         {/*Confirm  Password Input */}
+         <div className="h-full px-3 py-2 mb-5 mt-5 border-[1px] border-solid border-primary">
+        <input
+            type="password"
+            value={cpassword} 
+            onChange={(e) => setCPassword(e.target.value)}
+            id="confirmPassword"
+            name="confirmPassword"
+            className="form-input mt-1 block w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
+            placeholder="XXXXXXXXXX"
+            required
+          />
+          </div>
        
         <button
           type="submit"
