@@ -22,8 +22,11 @@ function validateInput( email) {
   };
 
 const SignUpPage = () => {
-    const [email, setEmail] = useState("");
-    const router = useRouter()
+  // const [userName, setuserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [cpassword, setCPassword] = useState("");
+  const router = useRouter()
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -62,11 +65,11 @@ const SignUpPage = () => {
       };
 
 
-      useEffect(() => {
-        if (localStorage.getItem('token')){
-          router.push("/")
-        }
-      })
+      // useEffect(() => {
+      //   if (localStorage.getItem('token')){
+      //     router.push("/")
+      //   }
+      // })
 
 
     return (
@@ -76,9 +79,9 @@ const SignUpPage = () => {
 
     <h2 className=" text-center justify-content-center ">Create your account</h2>
     <div className="text-center justify-content-center d-flex ">
-    <p className= "m-0">Please note that phone verification is required for </p>
-    <p className="m-0">signup. Your number will only be used to verify</p>
-    <p className="m-0">your identity for security purposes.</p>
+    <p className= "m-0">Enter your personal details to start
+    <b /> your journey with us</p>
+    
     </div>
 
     
@@ -103,8 +106,8 @@ const SignUpPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             id="password"
             name="password"
-            className="form-input mt-1 block w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            placeholder="XXXXXXXXXX"
+            className="w-full h-full px-3 py-4 bg-transparent border-none outline-none"
+            placeholder=".........."
             required
           />
         </div>
@@ -117,8 +120,8 @@ const SignUpPage = () => {
             onChange={(e) => setCPassword(e.target.value)}
             id="confirmPassword"
             name="confirmPassword"
-            className="form-input mt-1 block w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            placeholder="XXXXXXXXXX"
+            className="w-full h-full px-3 py-4 bg-transparent border-none outline-none"
+            placeholder=".........."
             required
           />
           </div>
@@ -131,10 +134,10 @@ const SignUpPage = () => {
         </button>
       </form>
 
-    <p className="top-[31.63rem] text-center">Already have an account? <Link href="./signIn" className="underline text-blue-600">Login</Link></p>
-    <div className="absolute top-[35.75rem] left-[0.25rem] w-[36.75rem] h-[2.25rem]">
-    <div className="absolute top-[1.09rem] left-[-0.03rem] box-border w-[15.63rem] h-[0.06rem] border-t-[1px] border-solid border-black" />
-    <div className="absolute top-[1.09rem] left-[21.16rem] box-border w-[15.63rem] h-[0.06rem] border-t-[1px] border-solid border-black" />
+      <p className=" text-center">Already have an account? <Link href="./signIn" className="underline text-blue-600">Signin</Link></p>
+    <div className="absolute top-[38.99rem] left-[0.25rem] w-[36.75rem] h-[2.25rem]">
+    <div className="absolute top-[1.09rem] left-[-0.03rem] box-border w-[15.63rem] h-[0.06rem] border-t-[0.55px] border-solid border-black" />
+    <div className="absolute top-[1.09rem] left-[21.16rem] box-border w-[15.63rem] h-[0.06rem] border-t-[0.55px] border-solid border-black" />
     <div className="absolute top-[0rem] left-[17.31rem]">OR</div>
     </div>
 
@@ -157,8 +160,6 @@ const SignUpPage = () => {
     width={30}
     height={30} />
 </div>
-
-
 
 
 

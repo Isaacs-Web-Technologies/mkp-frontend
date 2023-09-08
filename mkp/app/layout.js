@@ -8,7 +8,7 @@ export const metadata = {
   description: 'Cook with AI, share with ease',
 }
 
-export default function RootLayout({ children }) {
+const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body >
@@ -20,3 +20,5 @@ export default function RootLayout({ children }) {
     </html>
   )
 }
+
+export default RootLayout;

@@ -23,6 +23,7 @@ function validateInput( email) {
 
 const SignUpPage = () => {
     const [email, setEmail] = useState("");
+    const [password,setPassword] = useState("");
     const router = useRouter()
 
     const handleSubmit = async (event) => {
@@ -62,11 +63,11 @@ const SignUpPage = () => {
       };
 
 
-      useEffect(() => {
-        if (localStorage.getItem('token')){
-          router.push("/")
-        }
-      })
+      // useEffect(() => {
+      //   if (localStorage.getItem('token')){
+      //     router.push("/")
+      //   }
+      // })
 
 
     return (
@@ -74,11 +75,10 @@ const SignUpPage = () => {
     <div className="absolute top-[0rem] left-[35.88rem] rounded-tl-3xl rounded-tr-none rounded-br-none rounded-bl-3xl bg-sec-color w-[54.13rem] h-[64rem]" />
     <div className="absolute top-[6.44rem] left-[44.31rem] w-[37.25rem] h-[51.13rem] text-left text-black">
 
-    <h2 className=" text-center justify-content-center ">Create your account</h2>
+    <h2 className=" text-center justify-content-center ">Welcome Back</h2>
     <div className="text-center justify-content-center d-flex ">
-    <p className= "m-0">Please note that phone verification is required for </p>
-    <p className="m-0">signup. Your number will only be used to verify</p>
-    <p className="m-0">your identity for security purposes.</p>
+    <p className= "m-0">To keep connected with us please
+    <b />login with your personal info </p> 
     </div>
 
     
@@ -103,7 +103,7 @@ const SignUpPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             id="password"
             name="password"
-            className="form-input mt-1 block w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
+            className="w-full h-full px-3 py-4 bg-transparent border-none outline-none"
             placeholder="XXXXXXXXXX"
             required
           />

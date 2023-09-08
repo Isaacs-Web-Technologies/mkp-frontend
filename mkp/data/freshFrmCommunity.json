@@ -1,38 +1,32 @@
-{
-    "freshFrmCommunity" : [
-        {           
-      "id": 1,
-      "image": "../public/images/pastaTomatoSauceWithChicken.png",
-      "title": "PASTA TOMATO SAUCE WITH CHICKEN",
-      "link": "/"
-        },
-
-       {           
-      "id": 2,
-      "image": "",
-      "title": "../public/images/pastaTomatoSauceWithChicken.png",
-      "link": "/"
-       },
-
-       {           
-      "id": 3,
-      "image": "",
-      "title": "../public/images/pastaTomatoSauceWithChicken.png",
-      "link": "/"
-       },
-
-      {           
-      "id": 4,
-      "image": "",
-      "title": "PASTA TOMATO SAUCE WITH CHICKEN",
-      "link": "/"
-      },
-
-     {           
-      "id": 5,
-      "image": "",
-      "title": "PASTA TOMATO SAUCE WITH CHICKEN",
-      "link": "/"
-     }
-    ]
-}
+[
+  {
+    "id": 1,
+    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  },
+  {
+    "id": 2,
+    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  },
+  {
+    "id": 3,
+    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  },
+  {
+    "id": 4,
+    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  },
+  {
+    "id": 5,
+    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  }
+]
