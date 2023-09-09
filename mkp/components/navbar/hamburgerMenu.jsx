@@ -1,28 +1,18 @@
-import Image from "next/image";
+import { FaBars, FaTimes } from 'react-icons/fa';
 
-const HamburgerMenu = ({ isActive, onClick }) => {
+export const HamburgerMenu = ({ isActive, onClick }) => {
   return (
     <button
-      className="md:hidden text-gray-700 focus:outline-none"
+      className="md:hidden   text-gray-700 border-none focus:outline-none"
       onClick={onClick}
     >
       {isActive ? (
-        <Image
-          src="/assets/icons/close.svg"
-          width={30}
-          height={30}
-          alt="close"
-        />
+        <FaTimes size={30} color="gray" />
       ) : (
-        <Image
-          src="/assets/icons/hamburger.svg"
-          width={30}
-          height={30}
-          alt="hamburger"
-        />
+        <FaBars size={30} color="gray" />
       )}
     </button>
   );
 };
 
-export default HamburgerMenu;
+

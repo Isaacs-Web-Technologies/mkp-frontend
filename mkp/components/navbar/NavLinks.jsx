@@ -1,14 +1,14 @@
 import Link from "next/link";
 
-  const NavLinks = ({ showLinks }) => {
+export const NavLinks = ({ showLinks }) => {
   const linkStyles = "text-black hover:text-red ";
 
   return (
     <ul
-      className={`absolute w-[640px] left-[50%] transform -translate-x-1/2 top-4 flex list-none justify-between items-center gap-10 ${
-        showLinks ? "block" : "hidden md:hidden"
-      }`}
-    >
+    className={` top-0 lg:flex list-none justify-between lg:items-center gap-10 ${
+      showLinks ? "block " : "hidden md:hidden list-none"
+    }`}
+  >
       <li className={linkStyles}>
         <Link href="/">Recipes</Link>
       </li>
@@ -24,9 +24,13 @@ import Link from "next/link";
       <li className={linkStyles}>
         <Link href="/">About Us</Link>
       </li>
+      <li>
+      <Link href="./signIn"><button className="ml-5 flex outline_btn">Login</button></Link>
+      </li>
+      <li>
+      <Link href="./signUp"><button className="ml-2 flex   black_btn">Sign up</button></Link>
+      </li>
     </ul>
   );
 };
-export default NavLinks;
-
 

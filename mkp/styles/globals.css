@@ -60,3 +60,7 @@ body {
   rgba(0,0,0,.4) 60%,
   rgba(0,0,0,0) 100%);
 }
+
+.hamburger-position {
+  transform: scaleX(-1);
+}
