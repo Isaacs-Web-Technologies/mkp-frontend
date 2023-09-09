@@ -1,17 +1,17 @@
 import Hero from '@/components/landingPgComponents/hero'
 import { Navbar } from '@/components/navbar/NavBar'
 import {SearchBar} from '@/components/landingPgComponents/searchBar'
-import Image from 'next/image'
 import { LatestRecipes } from '@/components/landingPgComponents/latestRecipies'
 import { FreshFromCommunity } from '@/components/landingPgComponents/frshFrmCommunity'
 import { ExploreNigerianRecipies } from '@/components/landingPgComponents/ExploreNigerianRecipies'
+import { Footer } from '@/components/footer'
 
 
 const Home = () => {
   return (
   <div>
     <section>
-    {/* <Navbar /> */}
+    <Navbar />
     </section>
     <section>
        <Hero />
@@ -27,6 +27,9 @@ const Home = () => {
     </section>
     <section>
       <ExploreNigerianRecipies />
+    </section>
+    <section>
+      <Footer />
     </section>
  </div>
 

@@ -20,12 +20,12 @@ export const SearchBar = () => {
   };
 
   return (
-    <div className="relative w-full max-w-md mx-auto">
-      <div className="flex items-center border border-gray-300 shadow-md rounded-lg">
+    <div className="relative w-full lg:max-w-[75%] max-w-md mx-auto pt-12 pb-10 font-poppins">
+      <div className="flex items-center border border-gray-800 shadow-md rounded-lg">
         <input
           type="text"
           placeholder="How to cook bolognese..."
-          className="w-full py-2 px-4 pr-16 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full py-2 px-4 pr-16 rounded-lg border-none "
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         
@@ -33,14 +33,14 @@ export const SearchBar = () => {
         <button
           className={`${
             isFavorite ? 'text-red-500' : 'text-gray-500'
-          } bg-transparent p-2 rounded-lg hover:bg-opacity-80`}
+          } border-none bg-transparent p-2 rounded-lg hover:bg-opacity-80`}
           onClick={handleFavoriteClick}
         >
          
           <FiSend size={24} />
         </button>
        
-        <button className="bg-primary text-white p-2 rounded-lg hover:bg-opacity-80">
+        <button className="bg-white text-red-500 border-none ml-2 p-2 rounded-full shadow-md hover:bg-opacity-80">
           <FiHeart size={24} />
         </button>
       </div>

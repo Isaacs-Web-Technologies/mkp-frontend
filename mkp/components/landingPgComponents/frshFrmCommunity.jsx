@@ -17,7 +17,7 @@ export const FreshFromCommunity = ({  }) => {
   };
 
   return (
-    <div>
+    <div className=' font-poppins'>
     <div className="flex items-center justify-between">
       <h2 className="text-2xl font-semibold">Fresh from Community</h2>
       {freshFrmCommunity.length > 3 && (

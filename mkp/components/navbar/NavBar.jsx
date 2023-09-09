@@ -22,12 +22,12 @@ import Image from "next/image";
     width={30}
     height={30}
     alt="MyKitchenPower"
-    className="absolute left-3 top-3"
+    className="absolute left-3"
   />
       </div>
       <div className="hidden md:inline lg:flex flex-row">
         <NavLinks showLinks={true} />
-        <Link href="./login"><button className="ml-5 flex outline_btn">Login</button></Link>
+        <Link href="./signIn"><button className="ml-5 flex outline_btn">Login</button></Link>
         <Link href="./signUp"><button className="ml-2 flex   black_btn">Sign up</button></Link>
       </div>
       <div className="md:hidden">

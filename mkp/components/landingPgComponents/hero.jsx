@@ -4,19 +4,19 @@ import HeroImage from "@/public/images/heroImg.png"
 
 const Hero = () => {
   return (
-    <section className="hero">
+    <section className="hero font-poppins">
     <div>
-      <h2>
+      <h2 className=''>
       Discover new and exciting meal
        <br/> with CookGPT faster than 
        <br/>ever
         </h2>
 
-        <p className="text-white text-xl mb-4">
+        <p className="text-white text-l mb-4">
               Classic and mouth-watering meals and side dishes 
               <br />for all seasons.
             </p>
-            <button className="bg-primary text-white px-6 py-2 rounded-full text-lg">
+            <button className="bg-primary text-white px-6 py-4 rounded-lg border-none text-lg">
               Search for meal
             </button>
     </div>          

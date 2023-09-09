@@ -17,7 +17,7 @@ export const ExploreNigerianRecipies = ({  }) => {
   };
 
   return (
-    <div>
+    <div className=' font-poppins'>
     <div className="flex items-center justify-between">
       <h2 className="text-2xl font-semibold">Explore Nigerian Recipes</h2>
       {exploreNigerianRecipies.length > 3 && (

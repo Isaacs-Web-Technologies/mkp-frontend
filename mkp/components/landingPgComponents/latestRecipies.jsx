@@ -17,7 +17,7 @@ export const LatestRecipes = ({  }) => {
   };
 
   return (
-    <div>
+    <div className=' font-poppins'>
     <div className="flex items-center justify-between">
       <h2 className="text-2xl font-semibold">Latest Recipes</h2>
       {latestRecipies.length > 3 && (
