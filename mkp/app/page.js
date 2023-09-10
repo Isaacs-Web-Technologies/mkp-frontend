@@ -14,7 +14,7 @@ const Home = () => {
     <Navbar />
     </section>
     <section>
-       {/* <Hero /> */}
+     <Hero /> 
     </section >
     <section>
       <SearchBar />

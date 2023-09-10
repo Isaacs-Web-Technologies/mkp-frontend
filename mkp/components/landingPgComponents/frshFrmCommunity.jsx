@@ -1,6 +1,7 @@
 'use client'
 import  { useState } from 'react';
 import freshFrmCommunity from "@/data/freshFrmCommunity.json";
+import Image from 'next/image';
 
 export const FreshFromCommunity = ({  }) => {
  
@@ -37,9 +38,11 @@ export const FreshFromCommunity = ({  }) => {
           className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4"
         >
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <img
+          <Image
               src={recipe.image}
               alt={recipe.title}
+              width={100}
+              height={100}
               className="w-full h-40 object-cover"
             />
             <div className="p-4">

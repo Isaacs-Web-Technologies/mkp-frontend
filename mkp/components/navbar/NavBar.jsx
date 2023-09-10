@@ -4,6 +4,7 @@ import {NavLinks} from "../navbar/NavLinks";
 import {HamburgerMenu }from "../navbar/hamburgerMenu";
 import Link from "next/link";
 import Image from "next/image";
+import MKP from '@/public/svgs/mkpLogo'
 
  export const Navbar = () => {
   const [showLinks, setShowLinks] = useState(false);
@@ -17,13 +18,7 @@ import Image from "next/image";
   return (
     <nav className="NavBar w-full h-full  bg-white">
       <div className="hidden md:inline lg:flex flex-row">
-      <Image
-    src="/public/svgs/mkpLogo.svg"
-    width={30}
-    height={30}
-    alt="MyKitchenPower"
-    className=" "
-  />
+      <MKP />
 
         <NavLinks showLinks={true} />
       </div>

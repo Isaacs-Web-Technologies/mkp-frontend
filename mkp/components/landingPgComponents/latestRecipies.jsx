@@ -1,6 +1,7 @@
 'use client'
 import  { useState } from 'react';
 import latestRecipies from "@/data/latestRecipes.json";
+import Image from 'next/image';
 
 export const LatestRecipes = ({  }) => {
  
@@ -15,7 +16,7 @@ export const LatestRecipes = ({  }) => {
     flexWrap: 'nowrap',
     overflowX: showAll ? 'auto' : 'hidden',
   };
-
+  console.log(latestRecipies);
   return (
     <div className=' font-poppins'>
     <div className="flex items-center justify-between">
@@ -29,17 +30,21 @@ export const LatestRecipes = ({  }) => {
         </button>
       )}
     </div>
+    
 
     <div style={cardContainerStyle} className="overflow-x-hidden">
+      
       {latestRecipies.map((recipe) => (
         <div
           key={recipe.id}
           className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4"
         >
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <img
+            <Image
               src={recipe.image}
               alt={recipe.title}
+              width={100}
+              height={100}
               className="w-full h-40 object-cover"
             />
             <div className="p-4">

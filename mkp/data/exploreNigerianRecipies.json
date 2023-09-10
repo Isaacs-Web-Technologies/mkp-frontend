@@ -1,32 +1,27 @@
 [
   {
     "id": 1,
-    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "image": "/images/friedrice.jpeg",
     "title": "PASTA TOMATO SAUCE WITH CHICKEN",
     "link": "/"
   },
   {
     "id": 2,
-    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "image": "/images/eba.jpeg",
     "title": "PASTA TOMATO SAUCE WITH CHICKEN",
     "link": "/"
   },
   {
     "id": 3,
-    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "image": "/images/jollofrice.jpeg",
     "title": "PASTA TOMATO SAUCE WITH CHICKEN",
     "link": "/"
   },
   {
     "id": 4,
-    "image": "../public/images/pastaTomatoSauceWithChicken.png",
-    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
-    "link": "/"
-  },
-  {
-    "id": 5,
-    "image": "../public/images/pastaTomatoSauceWithChicken.png",
+    "image": "/images/friedchicken.jpeg",
     "title": "PASTA TOMATO SAUCE WITH CHICKEN",
     "link": "/"
   }
+
 ]
