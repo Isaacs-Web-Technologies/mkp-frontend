@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "image": "/images/friedrice.jpeg",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  },
+  {
+    "id": 2,
+    "image": "/images/eba.jpeg",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  },
+  {
+    "id": 3,
+    "image": "/images/jollofrice.jpeg",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  },
+  {
+    "id": 4,
+    "image": "/images/friedchicken.jpeg",
+    "title": "PASTA TOMATO SAUCE WITH CHICKEN",
+    "link": "/"
+  }
+
+]
