@@ -41,8 +41,8 @@ export const FreshFromCommunity = ({  }) => {
           <Image
               src={recipe.image}
               alt={recipe.title}
-              width={100}
-              height={100}
+              width={500}
+              height={500}
               className="w-full h-40 object-cover"
             />
             <div className="p-4">
