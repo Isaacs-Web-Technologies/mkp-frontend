@@ -5,7 +5,7 @@ export const NavLinks = ({ showLinks }) => {
 
   return (
     <ul
-    className={` top-0 lg:flex list-none justify-between lg:items-center gap-10 ${
+    className={`list-none flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8 ${
       showLinks ? "block " : "hidden md:hidden list-none"
     }`}
   >
@@ -23,12 +23,6 @@ export const NavLinks = ({ showLinks }) => {
       </li>
       <li className={linkStyles}>
         <Link href="/">About Us</Link>
-      </li>
-      <li>
-      <Link href="./signIn"><button className="ml-5 flex outline_btn">Login</button></Link>
-      </li>
-      <li>
-      <Link href="./signUp"><button className="ml-2 flex   black_btn">Sign up</button></Link>
       </li>
     </ul>
   );

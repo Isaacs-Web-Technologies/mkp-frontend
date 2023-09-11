@@ -16,12 +16,22 @@ import MKP from '@/public/svgs/mkpLogo'
   };
 
   return (
-    <nav className="NavBar w-full h-full  bg-white">
-      <div className="hidden md:inline lg:flex flex-row">
-      <MKP />
+    <header className="bg-white">
 
-        <NavLinks showLinks={true} />
+   <nav className="flex justify-between items-center w-[92%]  mx-auto">
+      <div className="w-16 cursor-pointer">
+      <MKP />
       </div>
+      <div  className="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+      <NavLinks showLinks={true} />
+      </div>
+
+      <div className="flex items-center gap-6">
+      <Link href="./signIn" className=" px-5 py-2 ">Login</Link>
+      <Link href="./signUp"><button className="px-5 py-2  text-white rounded-md bg-primary ">Sign up</button></Link>
+      </div>
+
+  
 
       <div className="md:hidden">
       <HamburgerMenu isActive={isHamburgerActive} onClick={handleHamburgerClick} />
@@ -31,19 +41,12 @@ import MKP from '@/public/svgs/mkpLogo'
           }`}
         >
           <NavLinks showLinks={isHamburgerActive} />
-          {/* <ul>
-            <li>
-          
-        <Link href="/login"><button className="LogIn  left-72 top-4 text-primary underline">Log in</button></Link>
-      </li>
-      <li>
-     
-        <Link href="/signUp"> <button className="SignUp text-white absolute left-96 top-1/2 transform -translate-y-1/2 px-8 py-4 bg-primary rounded-lg flex items-center gap-10">Sign Up</button></Link>
-      </li>
-          </ul> */}
+         
         </div>
       </div>
     </nav>
+    </header>
+   
   );
 };
 
