@@ -7,7 +7,19 @@
 @tailwind utilities;
 
 body {
-  @apply leading-[normal] m-0;
+  /* @apply leading-[normal] m-0; */
+  font-family: 'Poppins', sans-serif
+}
+
+/* hide scrollbar for chrome, safari and opera */
+body::-webkit-scrollbar{
+  display:none;
+}
+
+/* hide scrollbar for IE, Edge and Firefox */
+body{
+  -ms-overflow-style: none; /*IE and EDge*/
+  scrollbar-width: none; /*firefox*/
 }
 
 /* Responsive Styles */
@@ -61,6 +73,3 @@ body {
   rgba(0,0,0,0) 100%);
 }
 
-.hamburger-position {
-  transform: scaleX(-1);
-}

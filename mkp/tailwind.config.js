@@ -8,12 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "gray": "rgba(0, 0, 0, 0.5)",
+        "gray": "rgba(30, 30, 30, 1)", 
         "black": "#000",
         "primary": "#39161a",
-        "inactive": "#808080",
         "gainsboro": "rgba(217, 217, 217, 0)",
-        "sec-color": "#fff"
       },
       fontFamily:{
         "poppins": "Poppins",
