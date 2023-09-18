@@ -4,7 +4,7 @@ import HeroImage from "@/public/images/heroImg.png"
 
 const Hero = () => {
   return (
-    <section className="hero font-poppins">
+    <section className="hero left-0 mx-auto flex-wrap">
     <div>
       <h2 className=''>
       Discover new and exciting meal
@@ -25,18 +25,9 @@ const Hero = () => {
         <Image
           src={HeroImage}
           alt="MKP Hero Image"
-          className="w-screen h-screen object-cover"
+          className="left-0 w-screen h-screen object-cover"
           priority
         />
-
-            
-          
-          
-          
-        
-
-       
-      
     </section>
   );
 };

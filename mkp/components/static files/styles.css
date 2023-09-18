@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Galada:wght@400&display=swap');
+
+
+
+body {
+  /* @apply leading-[normal] m-0; */
+  font-family: 'Poppins', sans-serif
+}
+
+/* hide scrollbar for chrome, safari and opera */
+body::-webkit-scrollbar{
+  display:none;
+}
+
+/* hide scrollbar for IE, Edge and Firefox */
+body{
+  -ms-overflow-style: none; /*IE and EDge*/
+  scrollbar-width: none; /*firefox*/
+}
+
+/* Responsive Styles */
+@media (min-width: 640px) {
+  .container {
+    padding: 2rem;
+  }
+
+  /* Additional responsive styles for tablets and larger screens */
+}
+
+@media (min-width: 768px) {
+  /* Styles for screens with a minimum width of 768px */
+  /* For tablets and larger screens */
+
+  .container {
+    max-width: 768px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Styles for screens with a minimum width of 1024px */
+  /* For desktop screens */
+
+  .container {
+    max-width: 1024px;
+  }
+}
+
+.hero{
+  /* width:100%; */
+  left: 0;
+  height: 100%;
+  background-color:rgba(0,0,0,0);
+  background-size: cover;
+  position:relative;
+}
+.hero > div {
+  
+  color: #fff;
+  position:absolute;
+  left: 0;
+  right:0;
+  top:0;
+  width:75%;
+  height: 80%;
+  padding: 4rem;
+  background-image: linear-gradient(to right,
+  rgba(0,0,0,0.9),
+  rgba(0,0,0,.7) 40%,
+  rgba(0,0,0,.4) 60%,
+  rgba(0,0,0,0) 100%);
+}
+
