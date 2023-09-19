@@ -13,8 +13,8 @@ import MKP from '@/public/svgs/mkpLogo'
   };
 
   return (
-<header className="bg-white  text-slate-800 w-full ease-in duration-300 fixed top-0 z-10">
-   <nav className="h-[60px]  md:w-auto  max-w-[1366px] mx-auto flex justify-between items-center px-5 ">
+<header className="bg-white left-0 text-slate-800 w-full ease-in duration-300 fixed top-0 z-10">
+   <nav className="h-[60px]  md:w-auto  mx-auto flex justify-between items-center px-5 ">
       
       <div className=" cursor-pointer lg:w-20 md:w-10 sm:w-5" onClick={handleHamburgerClick}>
       <MKP />
@@ -65,12 +65,53 @@ import MKP from '@/public/svgs/mkpLogo'
       </div>
       {/* smaller screen navigation */}
       <div className={isHamburgerActive ?   
-      `md:hidden absolute right-0 bottom-0 left-0 flex justify-center items-center w-full h-screen bg-primary` 
+      `md:hidden absolute top-[60px] right-0 bottom-0 left-0 flex justify-center items-center w-full h-screen bg-primary text-white text-center ease-in duration-300` 
       : 
-      ``
+      `md:hidden absolute top-[60px] right-0 left-[-100%] flex justify-center items-center w-full h-screen bg-primary  text-white text-center ease-in duration-300 text-center'                                                                           `
       
     }>
+      {/* smaller screen nav links */}
+      <div className="w-full">
 
+        <ul className="font-bold  text-2xl list-none">
+          <li onClick={handleHamburgerClick} className="py-4 ">
+         <Link className = " text-white no-underline  hover:text-pink-500 cursor-pointer" href= "/">
+         Recipes
+         </Link>
+          </li>
+          <li onClick={handleHamburgerClick} className="py-5 ">
+         <Link className = " text-white no-underline hover:text-pink-500 cursor-pointer" href= "/">
+         Popular
+         </Link>
+          </li>
+          <li onClick={handleHamburgerClick} className="py-5 ">
+         <Link className = " text-white no-underline hover:text-pink-500 cursor-pointer" href= "/">
+         Cuisine
+         </Link>
+          </li>
+          <li onClick={handleHamburgerClick} className="py-5 ">
+         <Link className = " text-white no-underline hover:text-pink-500 cursor-pointer" href= "/">
+         Kitchen Tips
+         </Link>
+          </li>
+          <li onClick={handleHamburgerClick} className="py-5 ">
+         <Link className = " text-white no-underline hover:text-pink-500 cursor-pointer" href= "/">
+         About us
+         </Link>
+          </li>
+        </ul>
+
+        <div className="flex flex-col justify-center items-center mt-16">
+        
+        <Link href="/signIn" onClick={handleHamburgerClick}>
+          <button className=" px-6 py-2 text-black rounded-md  bg-outline font-bold mb-5">Login</button>
+        </Link>
+        <Link href="/signUp" onClick={handleHamburgerClick}>
+          <button className=" px-6 py-2 text-black rounded-md  bg-outline font-bold mb-5">Sign Up</button>
+        </Link>
+        </div>
+      </div>
+      
       </div>
    </nav>
 </header>
