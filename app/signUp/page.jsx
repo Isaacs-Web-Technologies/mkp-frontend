@@ -12,17 +12,9 @@ import Apple from "@/public/images/apple.png"
 import MkpSignupImg from "@/public/images/mkpSignupImg.png"
 import Link from "next/link";
 
-function validateInput( email) {
-    if (email.search(/@/) == -1){
-      toast.error("email must be valid")
-      return (false)
-    }
-    
-    return (true)
-  };
+
 
 const SignUpPage = () => {
-  const [foodImg, setfoodImg] = useState("false");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
@@ -30,47 +22,37 @@ const SignUpPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!validateInput( email)) {
-          console.error("could not validate input")
-          return
+
+        // validate input fields
+        if (!email || !password || !cpassword) {
+          toast.error("Please fill in all fields.")
         }
-        let promiseResolve, promiseReject;
-        let promise = new Promise(function (resolve, reject) {
-          promiseResolve = resolve;
-          promiseReject = reject;
-        });
-        toast.promise(promise, {
-          loading: "creating account...",
-          success: (reason) => reason,
-          error: (reason) => reason
-        })
+        if (password !== cpassword) {
+          toast.error("passwords do not match.")
+          return;
+        }
+
+        // make API request to signup
+       
         try {
           const response = await AxiosInstance.post('/auth/signup', {
-            email
+            email,
+            password,
           });
-          promiseResolve("successfully created account")
-          console.log(response.data);
-          // Redirect to the dashboard or another protected page
-          setTimeout(() => router.push("/login"), 2000)
-        } catch (error) {
-          console.error(error);
+         //handle API response
+         if (response.data.message === "Successfully signed up") {
+          toast.success("Successfully signed up");
+          //redirect to login page
+          router.push("/login");
+         } else {
+          toast.error("Signup failed. Please try again.");
+         }
+      } catch (error) {
+        console.error(error);
+        toast.error("An error occurred during Signup. Please try again")
+      }
+    };
       
-          let errorMessage = "An error occurred during sign-up.";
-          if (error.response && error.response.data && error.response.data.message) {
-            errorMessage = error.response.data.message;
-          }
-      
-          promiseReject(errorMessage);
-        }
-      };
-
-
-      // useEffect(() => {
-      //   if (localStorage.getItem('token')){
-      //     router.push("/")
-      //   }
-      // })
-
 
     return (
 

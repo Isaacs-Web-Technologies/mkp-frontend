@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const AxiosInstance = axios.create({
-  baseURL: "/", // Replace with your backend API URL
+  baseURL: "https://my-kitchen-power-c2f3e0fe1a71.herokuapp.com", // Replace with your backend API URL
 });
 
 AxiosInstance.interceptors.request.use((config) => {

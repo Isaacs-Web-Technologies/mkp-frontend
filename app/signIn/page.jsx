@@ -43,7 +43,7 @@ const SignUpPage = () => {
           error: (reason) => reason
         })
         try {
-          const response = await AxiosInstance.post('/auth/signup', {
+          const response = await AxiosInstance.post('/auth/login', {
             email
           });
           promiseResolve("successfully created account")
@@ -180,4 +180,4 @@ const SignUpPage = () => {
     </section>
     );
     };
-    export default SignUpPage;
+    export default SignInPage;
