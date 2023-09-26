@@ -12,44 +12,47 @@ import Apple from "@/public/images/apple.png"
 import MkpSignupImg from "@/public/images/mkpSignupImg.png"
 import Link from "next/link";
 
-function validateInput( email) {
-    if (email.search(/@/) == -1){
-      toast.error("email must be valid")
-      return (false)
-    }
-    
-    return (true)
-  };
 
-const SignUpPage = () => {
+
+const SignInPage = () => {
     const [email, setEmail] = useState("");
     const [password,setPassword] = useState("");
     const router = useRouter()
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!validateInput( email)) {
-          console.error("could not validate input")
-          return
+
+        //validate inputs
+        if (! email || !password ){
+          toast.error("could not validate input")
+          return;
         }
+
         let promiseResolve, promiseReject;
         let promise = new Promise(function (resolve, reject) {
           promiseResolve = resolve;
           promiseReject = reject;
         });
         toast.promise(promise, {
-          loading: "creating account...",
+          loading: "Logging in...",
           success: (reason) => reason,
           error: (reason) => reason
         })
         try {
           const response = await AxiosInstance.post('/auth/login', {
-            email
+            email,
+            password,
           });
+          
+          // handle response
           promiseResolve("successfully created account")
           console.log(response.data);
+
+           // After a successful login, store the JWT token in localStorage
+           localStorage.setItem("token", response.data.atoken);
+
           // Redirect to the dashboard or another protected page
-          setTimeout(() => router.push("/login"), 2000)
+          setTimeout(() => router.push("/chatPage"), 2000)
         } catch (error) {
           console.error(error);
       
@@ -93,7 +96,7 @@ const SignUpPage = () => {
 </div>
 
  {/* email input div */}
- <div className="max-w-md mx-auto text-center  lg:top-0 lg:absolute lg:left-[874px] justify-content-center d-flex ">
+ <div className="max-w-md mx-auto text-center  lg:top-0 lg:absolute lg:left-[800px] justify-content-center d-flex ">
  <div className=" top-[6.44rem] justify-content-center  text-left text-black">
 
     <h2 className=" text-center  ">Welcome Back</h2>
@@ -129,14 +132,15 @@ const SignUpPage = () => {
           />
         </div>
         
-        <div className ="w-full h-full lg:px-[22px]  mb-5 mt-5 bg-primary  flex justify-center py-[29.96px] text-sec-color">
-        <button
+       
+        <div className ="w-full h-full lg:px-[22px]  mb-5 mt-5 bg-primary  flex justify-center  ">
+       <button
           type="submit"
-          className=""
+          className="bg-transparent border-none py-[25.96px]  outline-none text-white "
         >
           Continue
         </button>
-        </div>
+       </div>
 
       </form>
      {/*  */}

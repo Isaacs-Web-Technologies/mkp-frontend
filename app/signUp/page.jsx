@@ -11,10 +11,62 @@ import Microsoft from "@/public/images/microsoft.png"
 import Apple from "@/public/images/apple.png"
 import MkpSignupImg from "@/public/images/mkpSignupImg.png"
 import Link from "next/link";
+import { resolve } from "styled-jsx/css";
 
-
+// validating function
+function validateInput(firstName,lastName, email, password, cpassword) {
+ 
+  if (! firstName.match(/^[a-z0-9_-]+$/gi)) {
+    toast.error("username must only contain letters, numbers, underscores and hyphens")
+    return false
+  }
+  if (! lastName.match(/^[a-z0-9_-]+$/gi)) {
+    toast.error("username must only contain letters, numbers, underscores and hyphens")
+    return false
+  }
+  if (firstName.search(/[a-z]/gi) == -1) {
+    toast.error("firstname must contain at least one letter")
+    return (false)
+  }
+  if (lastName.search(/[a-z]/gi) == -1) {
+    toast.error("lastname must contain at least one letter")
+    return (false)
+  }
+  if (email.search(/@/) == -1){
+    toast.error("email must be valid")
+    return (false)
+  }
+  if (password !== cpassword) {
+    toast.error("passwords don't match")
+    return (false)
+  }
+  if (password.length < 8) {
+    toast.error("password must be at least 8 characters long")
+    return (false)
+  }
+  if (password.search(/[0-9]/) == -1) {
+    toast.error("password must contain digit")
+    return (false)
+  }
+  if (password.search(/[A-Z]/) == -1) {
+    toast.error("password must contain uppercase letters")
+    return (false)
+  }
+  if (password.search(/[a-z]/) == -1) {
+    toast.error("password must contain lowercase letters")
+    return (false)
+  }
+  if (password.search(/[!"#$%&\\'()*+,-.\/:;<=>?@\[\]^_`\{\|\}~]/) == -1) {
+    toast.error("password must contain symbols")
+    return (false)
+  }
+  return (true)
+};
 
 const SignUpPage = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
@@ -24,43 +76,56 @@ const SignUpPage = () => {
         event.preventDefault();
 
         // validate input fields
-        if (!email || !password || !cpassword) {
-          toast.error("Please fill in all fields.")
-        }
-        if (password !== cpassword) {
-          toast.error("passwords do not match.")
+        if (!validateInput(firstName,lastName, email, password, cpassword)) {
+          console.error("Could not validate inputs.")
           return;
         }
 
-        // make API request to signup
-       
+      // Display a loading message while making API requests
+      const promise = new Promise(async (resolve, reject) => {
         try {
           const response = await AxiosInstance.post('/auth/signup', {
+            first_Name: firstName,
+            last_Name: lastName,
+            username,
             email,
             password,
           });
-         //handle API response
-         if (response.data.message === "Successfully signed up") {
-          toast.success("Successfully signed up");
-          //redirect to login page
-          router.push("/login");
-         } else {
-          toast.error("Signup failed. Please try again.");
-         }
-      } catch (error) {
-        console.error(error);
-        toast.error("An error occurred during Signup. Please try again")
-      }
+          
+          if (response.data.message === "Successfully signed up") {
+            resolve("Successfully signed up");
+
+            //Redirect to login page after sign-up
+            router.push("/signIn");
+           } else if (response.data.message ==="email is taken") {
+              reject("Error message while creating user: email is taken");
+            } else {
+              reject("Signup failed. Please try again.")
+            }
+          } catch (error) {
+            console.error(error);
+            reject("An error occured during signup. Please try again")
+          }
+      });
+
+      //use toast.promise to display toast message
+      toast.promise(promise, {
+        loading: "Creating account...",
+        success: (reason) => toast.success(reason),
+        error: (reason) => toast.error(reason),
+      });
+
     };
-      
+
+  
 
     return (
 
 <>    
 
 {/* heading */}
-<section className="  lg:bg-primary bg-white  h-[51rem] ">
-<div className="w-[100rem] h-[51rem] px-16 left-[574px] top-0 absolute bg-white rounded-tl-3xl rounded-bl-3x" />
+<section className="  lg:bg-primary bg-white  h-[58rem] ">
+<div className="w-[100rem] h-[58rem] px-16 left-[574px] top-0 absolute bg-white rounded-tl-3xl rounded-bl-3x" />
 
 
 {/* food image */}
@@ -82,7 +147,7 @@ const SignUpPage = () => {
 </div>
 
  {/* email input div */}
- <div className="max-w-md mx-auto text-center  lg:top-0 lg:absolute lg:left-[874px] justify-content-center d-flex ">
+ <div className="max-w-md mx-auto text-center  lg:top-0 lg:absolute lg:left-[800px] justify-content-center d-flex ">
 
 <div className=" top-[6.44rem] justify-content-center  text-left text-black">
   <h2 className=" text-center  ">Create your account</h2>
@@ -92,48 +157,81 @@ const SignUpPage = () => {
 
 {/* Form for collecting email */}
 <form onSubmit={handleSubmit}>
-   <div className="w-full h-full lg:px-5 py-2 mb-5 mt-5 border-[1px] border-solid border-primary">
+  {/* firstname input */}
+  <div className="w-full  lg:px-5 py-1 mb-5 mt-5 border-[1px] border-solid border-primary">
+     <input
+      type="firstName"
+      value={firstName}
+      onChange={(e) => setFirstName(e.target.value)}
+       className="w-full   py-2 bg-transparent border-none outline-none "
+       placeholder="Enter your first name"
+       required
+     />
+   </div>
+   {/* lastname input */}
+   <div className="w-full  lg:px-5 py-1 mb-5 mt-5 border-[1px] border-solid border-primary">
+     <input
+      type="lastName"
+      value={lastName}
+      onChange={(e) => setLastName(e.target.value)}
+       className="w-full   py-2 bg-transparent border-none outline-none "
+       placeholder="Enter your last name"
+       required
+     />
+   </div>
+   {/* username input */}
+   <div className="w-full  lg:px-5 py-1 mb-5 mt-5 border-[1px] border-solid border-primary">
+     <input
+      type="username"
+      value={username}
+      onChange={(e) => setUserName(e.target.value)}
+       className="w-full  py-2 bg-transparent border-none outline-none "
+       placeholder="Enter your username"
+     />
+   </div>
+   {/* email input */}
+   <div className="w-full  lg:px-5 py-1 mb-5 mt-5 border-[1px] border-solid border-primary">
      <input
       type="email"
       value={email}
       onChange={(e) => setEmail(e.target.value)}
-       className="w-full h-full  py-4 bg-transparent border-none outline-none "
+       className="w-full   py-2 bg-transparent border-none outline-none "
        placeholder="Enter your email"
        required
      />
    </div>
 {/* Password Input */}
-<div className="w-full h-full lg:px-5 py-2 mb-5 mt-5 border-[1px] border-solid border-primary">
+<div className="w-full  lg:px-5 py-1 mb-5 mt-5 border-[1px] border-solid border-primary">
           <input
             type="password"
             value={password} 
             onChange={(e) => setPassword(e.target.value)}
             id="password"
             name="password"
-            className="w-full h-full  py-4 bg-transparent border-none outline-none"
+            className="w-full   py-2 bg-transparent border-none outline-none"
             placeholder="*********"
             required
           />
         </div>
 
          {/*Confirm  Password Input */}
-         <div className="w-full h-full lg:px-5 py-2 mb-5 mt-5 border-[1px] border-solid border-primary">
+         <div className="w-full  lg:px-5 py-1 mb-5 mt-5 border-[1px] border-solid border-primary">
         <input
             type="password"
             value={cpassword} 
             onChange={(e) => setCPassword(e.target.value)}
             id="confirmPassword"
             name="confirmPassword"
-            className="w-full h-full  py-4 bg-transparent border-none outline-none"
+            className="w-full   py-2 bg-transparent border-none outline-none"
             placeholder="***********"
             required
           />
           </div>
       
-       <div className ="w-full h-full lg:px-[22px]  mb-5 mt-5 bg-primary  flex justify-center py-[29.96px] text-sec-color">
+       <div className ="w-full h-full lg:px-[22px]  mb-5 mt-5 bg-primary  flex justify-center  ">
        <button
           type="submit"
-          className=""
+          className="bg-transparent border-none py-[25.96px]  outline-none text-white "
         >
           Continue
         </button>
