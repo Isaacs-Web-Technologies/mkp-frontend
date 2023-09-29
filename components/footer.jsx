@@ -43,7 +43,7 @@ export const Footer = () => {
         <div className="w-full md:w-1/4">
           <h3 className="text-lg font-semibold mb-3">Ready to have fun in the kitchen?</h3>
           <p>Sign Up for weekly Newletter</p>
-          <form className="flex items-center mt-4 w-full" action="https://send.pageclip.co/cKYu7vrVW902wDLXW3XiPih1r0xgQjYG" class="pageclip-form" method="post">
+          <form className="flex items-center text-white mt-4 w-full" action="https://send.pageclip.co/cKYu7vrVW902wDLXW3XiPih1r0xgQjYG" class="pageclip-form" method="post">
             <input
               type="email" 
               name="email"
