@@ -47,7 +47,7 @@ export const Footer = () => {
             <input
               type="email" 
               name="email"
-              value="roscoe@example.com"
+              value=""
               placeholder="Enter your email"
               className="bg-gray border-2 border-pink-300 p-4  w-full"
             />
