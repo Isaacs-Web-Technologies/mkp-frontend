@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const AxiosInstance = axios.create({
-  baseURL: "https://my-kitchen-power-c2f3e0fe1a71.herokuapp.com", // Replace with your backend API URL
+  baseURL: "https://mkpbackend-fe1c9f5599b1.herokuapp.com/", // Replace with your backend API URL
 });
 
 // Retrieve the token from the cookie
