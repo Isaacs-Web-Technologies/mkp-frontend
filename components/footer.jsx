@@ -48,7 +48,7 @@ export const Footer = () => {
               type="email" 
               name="email"
               placeholder="Enter your email"
-              className="bg-gray border-2 border-pink-300 p-4  w-full"
+              className="bg-gray text-white border-2 border-pink-300 p-4  w-full"
             />
              <button className="pageclip-form__submit bg-pink-200 text-brown w-full px-0.5 pt-4 border-none ml-2 pb-4 font-bold">Sign Up</button>
            </form>
