@@ -85,8 +85,8 @@ const SignUpPage = () => {
       const promise = new Promise(async (resolve, reject) => {
         try {
           const response = await AxiosInstance.post('/auth/signup', {
-            first_Name: firstName,
-            last_Name: lastName,
+            first_name: firstName,
+            last_name: lastName,
             username,
             email,
             password,
