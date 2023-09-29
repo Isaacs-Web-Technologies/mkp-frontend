@@ -36,16 +36,17 @@ const SignInPage = () => {
           loading: "Logging in...",
           success: (reason) => reason,
           error: (reason) => reason
-        })
+        });
         
         
 
         try {
              // Handle user login
              const response = await AxiosInstance.post('/auth/login', {
-              email,
+              login: email,
               password,
             });
+            
           // handle response
           promiseResolve("successfully created account")
           console.log(response.data);
