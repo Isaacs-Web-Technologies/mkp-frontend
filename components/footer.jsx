@@ -1,4 +1,14 @@
+'use client'
+import { useEffect } from "react";
+
 export const Footer = () => {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = "https://s.pageclip.co/v1/pageclip.js" 
+    script.async = true
+    document.head.appendChild(script)
+  
+   })
   return (
     <footer className="mt-12 bg-gray py-16 text-left text-white font-poppins">
       <div className=" container mx-auto flex flex-wrap justify-between">
@@ -33,14 +43,16 @@ export const Footer = () => {
         <div className="w-full md:w-1/4">
           <h3 className="text-lg font-semibold mb-3">Ready to have fun in the kitchen?</h3>
           <p>Sign Up for weekly Newletter</p>
-          <div className="flex items-center mt-4 w-full">
+          <form className="flex items-center mt-4 w-full" action="https://send.pageclip.co/cKYu7vrVW902wDLXW3XiPih1r0xgQjYG" class="pageclip-form" method="post">
             <input
-              type="text"
+              type="email" 
+              name="email"
+              value="roscoe@example.com"
               placeholder="Enter your email"
               className="bg-gray border-2 border-pink-300 p-4  w-full"
             />
-             <button className="bg-pink-200 text-brown w-full px-0.5 pt-4 border-none ml-2 pb-4 font-bold">Sign Up</button>
-           </div>
+             <button className="pageclip-form__submit bg-pink-200 text-brown w-full px-0.5 pt-4 border-none ml-2 pb-4 font-bold">Sign Up</button>
+           </form>
 
         </div>
       </div>

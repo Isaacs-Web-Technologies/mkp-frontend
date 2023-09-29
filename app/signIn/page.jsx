@@ -42,25 +42,20 @@ const SignInPage = () => {
 
         try {
              // Handle user login
-             const loginResponse = await AxiosInstance.post('/auth/login', {
+             const response = await AxiosInstance.post('/auth/login', {
               email,
               password,
             });
           // handle response
           promiseResolve("successfully created account")
-          console.log(loginResponse.data);
+          console.log(response.data);
 
-          const refreshToken = Cookies.get("rToken");
-
-          //send a request to the sever's token refresh endpoint
-          const refreshResponse = await AxiosInstance.post('/auth/refresh', {
-            rToken: refreshToken,
-          });
+       
       
-          if (refreshResponse.status === 200) {
+          if (response.status === 200) {
             // Update the access token with the new one
-            const newAccessToken = refreshResponse.data.accessToken;
-            Cookies.set("token", newAccessToken, { expires: 7 }); // Update the access token in the cookie
+            const access_token = response.data.atoken;
+            Cookies.set("token", access_token, { expires: 7 }); // Update the access token in the cookie
           }
       
           // Redirect to the dashboard or another protected page
