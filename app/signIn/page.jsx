@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState } from "react";
 import AxiosInstance from "@/components/axiosInstance";
@@ -11,7 +10,7 @@ import Microsoft from "@/public/images/microsoft.png"
 import Apple from "@/public/images/apple.png"
 import MkpSignupImg from "@/public/images/mkpSignupImg.png"
 import Link from "next/link";
-
+import Cookies from "js-cookie";
 
 
 const SignInPage = () => {
@@ -38,25 +37,38 @@ const SignInPage = () => {
           success: (reason) => reason,
           error: (reason) => reason
         })
+        
+        
+
         try {
-          const response = await AxiosInstance.post('/auth/login', {
-            email,
-            password,
-          });
-          
+             // Handle user login
+             const loginResponse = await AxiosInstance.post('/auth/login', {
+              email,
+              password,
+            });
           // handle response
           promiseResolve("successfully created account")
-          console.log(response.data);
+          console.log(loginResponse.data);
 
-           // After a successful login, store the JWT token in localStorage
-           localStorage.setItem("token", response.data.atoken);
+          const refreshToken = Cookies.get("rToken");
 
+          //send a request to the sever's token refresh endpoint
+          const refreshResponse = await AxiosInstance.post('/auth/refresh', {
+            rToken: refreshToken,
+          });
+      
+          if (refreshResponse.status === 200) {
+            // Update the access token with the new one
+            const newAccessToken = refreshResponse.data.accessToken;
+            Cookies.set("token", newAccessToken, { expires: 7 }); // Update the access token in the cookie
+          }
+      
           // Redirect to the dashboard or another protected page
-          setTimeout(() => router.push("/chatPage"), 2000)
+          setTimeout(() => router.push("/chatPage"), 2000);
         } catch (error) {
           console.error(error);
       
-          let errorMessage = "An error occurred during sign-up.";
+          let errorMessage = "An error occurred during sign-in.";
           if (error.response && error.response.data && error.response.data.message) {
             errorMessage = error.response.data.message;
           }
@@ -64,13 +76,6 @@ const SignInPage = () => {
           promiseReject(errorMessage);
         }
       };
-
-
-      // useEffect(() => {
-      //   if (localStorage.getItem('token')){
-      //     router.push("/")
-      //   }
-      // })
 
 
     return (
