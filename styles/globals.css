@@ -80,52 +80,21 @@ body{
   rgba(0,0,0,0) 100%);
 }
 
-/* chat styling */
-.chatContainer {
-  max-width: 1100px;
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  gap: 20px;
+
+.react-scroll-to-bottom--css-ikyem-1n7m0yu {
+  
+  overflow-y: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
-
-
-
-
-/* Messages */
-.messagesColumn {
-  height: 85vh;
-  overflow: auto;
-  padding: 10px 10px 10px 40px;
-}
-.message {
-  background: rgb(110, 108, 103);
-  font:white;
-  border-radius: 6px;
-  margin-bottom: 24px;
-  max-width: 600px;
-  padding: 12px;
-}
-.msgMeta {
-  color: rgb(153, 217, 234);
-  font-size: 0.75rem;
-}
-.msgText {
-  color: #fff;
+textarea:focus {
+  outline: none;
+  box-shadow: none;
 }
 
-/* Message input and button */
-.buttonStyles {
-  cursor: 'pointer';
-}
-.message-input-container {
-
-    border: 'none';
-    max-width: 100%;
-    border-bottom: '1px solid #ccc';
-    padding: '18px';
-    margin-right: '8px';
-    outline: 'none';
-    font-size: '16px';
+@media (max-width: 768px) {
+  .history {
+    display: none; 
+  }
 }

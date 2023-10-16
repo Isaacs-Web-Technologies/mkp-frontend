@@ -43,7 +43,7 @@ const SignInPage = () => {
         try {
              // Handle user login
              const response = await AxiosInstance.post('/auth/login', {
-              email,
+              login: email,
               password,
             });
           // handle response
@@ -54,12 +54,12 @@ const SignInPage = () => {
       
           if (response.status === 200) {
             // Update the access token with the new one
-            const access_token = response.data.atoken;
+            const access_token = response.data.auth_info.atoken; //initialize other auth info in future
             Cookies.set("token", access_token, { expires: 7 }); // Update the access token in the cookie
           }
       
           // Redirect to the dashboard or another protected page
-          setTimeout(() => router.push("/chatPage"), 2000);
+          setTimeout(() => router.push("/Dashboard"), 2000);
         } catch (error) {
           console.error(error);
       
