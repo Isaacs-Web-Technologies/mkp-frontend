@@ -5,11 +5,9 @@ import { BsChevronDown, BsPlusLg } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
 import useAutoResizeTextArea from "@/hooks/useAutoResizeTextArea";
 import Message from "@/components/User/chat/messages";
-import AxiosInstance from "@/components/axiosInstance";
 import { useDispatch, useSelector } from 'react-redux';
 import {  
   setConversation,
-   addMessage, 
    setThreadId, 
    setChatId,
    setMessage,
@@ -38,38 +36,39 @@ const Chat = (props) => {
       textAreaRef.current.style.height = "24px";
       textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
     }
-  }, [message, textAreaRef]);
+  }, [setMessage, textAreaRef]);
 
-  const handleInputChange = (e) => {
-    dispatch(setMessage(e.target.value));  // Set message in Redux store
-  };
+  
 
   
     // Send a message to the chatbot
-  const sendMessage = async (e) => {
-  e.preventDefault();
-  // Don't send empty messages
-  if (message.length < 1) {
-    setErrorMessage("Please enter a message.");
-    return;
-  } else {
-    setErrorMessage("");
-  }
-  // trackEvent("send.message", { message: message });
-  // setIsLoading(true);
-    // Use dispatch to update redux store
-    dispatch(sendMessageAsync(message)).then((res) => {
-      if (res.type.includes('fulfilled')) {
-        setIsLoading(false);
-        // You can add any other logic that needs to run on success here
-      } else {
-        setIsLoading(false);
-        setErrorMessage(res.error.message); // Display the error message from the rejected action
+    const sendMessage = async (e) => {
+      e.preventDefault();
+  
+      // Don't send empty messages
+      if (message.length < 1) {
+        setErrorMessage("Please enter a message.");
+        return;
       }
-    });
-  };
+  
+      // Reset the error message if any
+      setErrorMessage("");
+  
+      // Dispatch the async thunk with the message
+      dispatch(sendMessageAsync(message))
+        .then((res) => {
+          if (res.type.includes('fulfilled')) {
+            // Logic after a successful message send
+            // You can update the UI or any other logic you want to run on success here
+            setMessage(res.payload);  // Assuming you want to set the message in your redux state
+          } else {
+            // Handle the error
+            setErrorMessage(res.error.message); // Display the error message from the rejected action
+          }
+        });
+    };
 
- // Get all messages in a thread
+ // Get allmessages in a thread
 const fetchAllMessages = async () => {
   setIsLoading(true);
   dispatch(getAllMessagesAsync()).then((res) => {
@@ -82,7 +81,7 @@ const fetchAllMessages = async () => {
   });
 };
 
-// Delete all messages in a thread
+// Delete allmessages in a thread
 const removeAllMessages = async () => {
   setIsLoading(true);
   dispatch(deleteAllMessagesAsync()).then((res) => {
@@ -256,8 +255,8 @@ const fetchStreamedResponse = async () => {
                   // rows={1}
                   placeholder="Send a message..."
                   className="m-0 w-full resize-none text-white border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0"
-                  onChange={handleInputChange}  // Add this handler                  onKeyDown={handleKeypress}
-                ></textarea>
+                  onChange={(e) => dispatch(setMessage(e.target.value))}
+                  ></textarea>
 
                 <button
                   disabled={isLoading || message?.length === 0}

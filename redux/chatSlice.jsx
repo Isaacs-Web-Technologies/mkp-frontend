@@ -4,7 +4,7 @@ import AxiosInstance from "@/components/axiosInstance";
 //  async thunk for sending a message
 export const sendMessageAsync = createAsyncThunk(
   'chat/sendMessage',
-  async (message, { dispatch, getState, rejectWithValue }) => {
+  async (message, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(`/chat/`, { query: message });
       if (response.status !== 201) throw new Error(response.statusText);
@@ -90,7 +90,7 @@ export const getAllMessagesAsync = createAsyncThunk(
 export const chatSlice = createSlice({
   name: 'chat',
   initialState: {
-    message: '',
+    message: [],
     conversation: [],
     status: 'idle',
     error: null,
@@ -99,21 +99,21 @@ export const chatSlice = createSlice({
     messages: []
   },
   reducers: {
+    setMessage: (state, action) => {
+      state.message.push(action.payload);
+    },
+  setConversation: (state, action) => {
+      state.conversation = action.payload;
+    },
     clearConversation: state => {
       state.conversation = [];
     },
     setThreadId: (state, action) => {
       state.threadId = action.payload;
     },
-    setMessage: (state, action) => {
-        state.conversation.push(action.payload);
-      },
-    setConversation: (state, action) => {
-        state.conversation = action.payload;
-      },
-      setChatId: (state, action) => { 
-        state.chatId = action.payload;
-      }
+     setChatId: (state, action) => { 
+      state.chatId = action.payload;
+    }
     },
  
     extraReducers: builder => {
@@ -125,7 +125,7 @@ export const chatSlice = createSlice({
             state.isLoading = false;
             state.threadId = action.payload.threadId;
             state.chatId = action.payload.chatId;
-            state.conversation.push({ 
+            state.message.push({ 
               content: state.message, 
               role: "system" 
             });
