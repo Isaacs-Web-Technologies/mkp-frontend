@@ -3,164 +3,58 @@ import React, { useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
 import { BsChevronDown, BsPlusLg } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
-import useAutoResizeTextArea from "@/hooks/useAutoResizeTextArea";
-import Message from "@/components/User/chat/messages";
+// import useAutoResizeTextArea from "@/hooks/useAutoResizeTextArea";
+// import Message from "@/components/User/chat/messages";
 import { useDispatch, useSelector } from 'react-redux';
-import {  
-  setConversation,
-   setThreadId, 
-   setChatId,
-   setMessage,
-   deleteSingleChatAsync, 
-   getSingleChatAsync,
-   deleteAllMessagesAsync,
-   getAllMessagesAsync,
-   sendMessageAsync } from '@/redux/chatSlice';
+import { sendMessage } from '@/redux/chatSlice';
+  
 
 
 
 const Chat = (props) => {
   const {toggleComponentVisibility } = props;
-  const [isLoading, setIsLoading] = useState(false);
+  const [messageContent, setMessageContent] = useState('');
+  // const [isLoading, setIsLoading] = useState(false);
+  const messages = useSelector(state => state.chat.messages);
+  const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyChat, setShowEmptyChat] = useState(true);
-  const textAreaRef = useAutoResizeTextArea();
-  const dispatch = useDispatch();
-  const message = useSelector((state) => state.chat.message);
-  const conversation = useSelector((state) => state.chat.conversation);
-  const threadId = useSelector((state) => state.chat.threadId);
-  const chatId = useSelector((state) => state.chat.chatId);
+  const threads = useSelector(state => state.chat.threads);
+  const activeThreadId = useSelector(state => state.chat.activeThreadId);
+  const activeThread = threads.find(t => t.id === activeThreadId);
 
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = "24px";
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
-    }
-  }, [setMessage, textAreaRef]);
+  // const textAreaRef = useAutoResizeTextArea();
 
-  
+  // useEffect(() => {
+  //   if (textAreaRef.current) {
+  //     textAreaRef.current.style.height = "24px";
+  //     textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+  //   }
+  // }, [setMessage, textAreaRef]);
 
   
-    // Send a message to the chatbot
-    const sendMessage = async (e) => {
-      e.preventDefault();
-  
-      // Don't send empty messages
-      if (message.length < 1) {
-        setErrorMessage("Please enter a message.");
-        return;
-      }
-  
-      // Reset the error message if any
-      setErrorMessage("");
-  
-      // Dispatch the async thunk with the message
-      dispatch(sendMessageAsync(message))
-        .then((res) => {
-          if (res.type.includes('fulfilled')) {
-            // Logic after a successful message send
-            // You can update the UI or any other logic you want to run on success here
-            setMessage(res.payload);  // Assuming you want to set the message in your redux state
-          } else {
-            // Handle the error
-            setErrorMessage(res.error.message); // Display the error message from the rejected action
-          }
-        });
-    };
 
- // Get allmessages in a thread
-const fetchAllMessages = async () => {
-  setIsLoading(true);
-  dispatch(getAllMessagesAsync()).then((res) => {
-    setIsLoading(false);
-    if (res.type.includes('fulfilled')) {
-      // You can add any other logic that needs to run on success here
-    } else {
-      setErrorMessage(res.error.message);
+ const handleNewThread = () => {
+    const newThreadId = `thread_${Date.now()}`;
+    dispatch(startNewThread(newThreadId));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (messageContent.trim()) {
+      dispatch(sendMessage({ messageContent, thread_id: activeThreadId }));
+      setMessageContent('');
     }
-  });
-};
-
-// Delete allmessages in a thread
-const removeAllMessages = async () => {
-  setIsLoading(true);
-  dispatch(deleteAllMessagesAsync()).then((res) => {
-    setIsLoading(false);
-    if (res.type.includes('fulfilled')) {
-      // Any success logic
-    } else {
-      setErrorMessage(res.error.message);
-    }
-  });
-};
-
-// Get a single chat from a thread
-const fetchSingleChat = async (chatId) => {
-  setIsLoading(true);
-  dispatch(getSingleChatAsync(chatId)).then((res) => {
-    setIsLoading(false);
-    if (res.type.includes('fulfilled')) {
-      // Success logic
-    } else {
-      setErrorMessage(res.error.message);
-    }
-  });
-};
-
-// Delete a single chat from a thread
-const removeSingleChat = async (chatId) => {
-  setIsLoading(true);
-  dispatch(deleteSingleChatAsync(chatId)).then((res) => {
-    setIsLoading(false);
-    if (res.type.includes('fulfilled')) {
-      // Success logic
-    } else {
-      setErrorMessage(res.error.message);
-    }
-  });
-};
-
-// Read a streamed response bit by bit
-const fetchStreamedResponse = async () => {
-  setIsLoading(true);
-  dispatch(readStreamedResponseAsync()).then((res) => {
-    setIsLoading(false);
-    if (res.type.includes('fulfilled')) {
-      // Success logic
-    } else {
-      setErrorMessage(res.error.message);
-    }
-  });
-};
-
-  const handleKeypress = (e) => {
-    // It's triggers by pressing the enter key
     if (e.keyCode === 13 && !e.shiftKey) {
       sendMessage(e);
       e.preventDefault();
     }
   };
 
-  function ChatHistory({ conversation }) {
-
-    const messagesEndRef = useRef(null);
-  
-    useEffect(() => {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }, [conversation]);
-  
-    return (
-      <div className="message-history">
-        {conversation.map((message, index) => (
-          <Message key={index} message={message} />  
-        ))}
-        
-        <div ref={messagesEndRef} /> 
-      </div>
-    );
-  
-  }
-
+  const handleDelete = (messageId) => {
+    dispatch(deleteMessage(messageId));
+  };
+    
   return (
     <div className="flex max-w-full flex-1 flex-col container  border border-black/10 dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] ">
       {/* hamburger menu for smaller screens and new chat */}
@@ -180,44 +74,23 @@ const fetchStreamedResponse = async () => {
       </div>
 
       <div className="relative h-full w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
-        
-          {/* Get All Messages Button */}
-          <button onClick={fetchAllMessages} className="bg-blue-500 text-white px-4 py-2 rounded">
-            Get All Messages
-          </button>
-
-          {/* Delete All Messages Button */}
-          <button onClick={removeAllMessages} className="bg-red-500 text-white px-4 py-2 rounded">
-            Delete All Messages
-          </button>
-
-          {/* Get Single Chat Input and Button */}
-          <div className="flex space-x-2">
-            <input type="text" placeholder="Chat ID" onChange={(e) => setChatId(e.target.value)} className="border px-2 py-1 rounded"/>
-            <button onClick={() => fetchSingleChat(chatId)} className="bg-green-500 text-white px-4 py-2 rounded">
-              Fetch Single Chat
-            </button>
-          </div>
-
-          {/* Delete Single Chat Button */}
-          <button onClick={() => removeSingleChat(chatId)} className="bg-yellow-500 text-white px-4 py-2 rounded">
-            Delete Single Chat
-          </button>
-
-          {/* Fetch Streamed Response Button */}
-          <button onClick={fetchStreamedResponse} className="bg-purple-500 text-white px-4 py-2 rounded">
-            Fetch Streamed Response
-          </button>
-
       {/* chat container */}
-   
-
-            <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu">
+         <button onClick={() => handleDelete(message.id)}>Delete</button>
+           {threads.map(thread => (
+              <div key={thread.id}>
+                Thread {thread.id}
+                <button onClick={() => dispatch(setActiveThread(thread.id))}>Open</button>
+                <button onClick={() => dispatch(deleteThread(thread.id))}>Delete</button>
+              </div>
+            ))}
+        <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu">
               {!showEmptyChat && conversation.length > 0 ? (
-               
-                <ChatHistory conversation={conversation}/> 
-
-                
+                messages.map(message => (
+                  <div key={message.id} className={message.sender}>
+                    {message.content}
+                    
+                  </div>
+                ))
               ) : null}
               {showEmptyChat ? (
                 // displays My kitchen power in an empty chat
@@ -232,7 +105,7 @@ const fetchStreamedResponse = async () => {
 
        {/* input area */}
        <div className=" bottom-0  w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-gray-800 md:!bg-transparent dark:md:bg-vert-dark-gradient pt-2">
-          <form className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
+          <form onSubmit={handleSubmit} className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
             <div className="relative flex flex-col h-full flex-1 items-stretch md:flex-col">
               {errorMessage ? (
                 <div className="mb-2 md:mb-0">
@@ -243,23 +116,23 @@ const fetchStreamedResponse = async () => {
               ) : null}
               <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-black/10 bg-gray dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
                 <textarea
-                  ref={textAreaRef}
-                  value={message}
+                  // ref={textAreaRef}
+                  value={messageContent}
                   tabIndex={0}
                   data-id="root"
                   style={{
-                    height: "24px",
+                    height: "28px",
                     maxHeight: "200px",
                     overflowY: "hidden",
                   }}
                   // rows={1}
                   placeholder="Send a message..."
                   className="m-0 w-full resize-none text-white border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0"
-                  onChange={(e) => dispatch(setMessage(e.target.value))}
-                  ></textarea>
+                  onChange={e => setMessageContent(e.target.value)}>                   
+                  </textarea>
 
                 <button
-                  disabled={isLoading || message?.length === 0}
+                  // disabled={isLoading || sendMessage?.length === 0}
                   onClick={sendMessage}
                   className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 right-1 md:right-2 disabled:opacity-40"
                 >

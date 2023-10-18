@@ -47,7 +47,7 @@ const SignInPage = () => {
               password,
             });
           // handle response
-          promiseResolve("successfully created account")
+          promiseResolve("successfully logged in")
           console.log(response.data);
 
        
