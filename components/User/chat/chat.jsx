@@ -19,7 +19,7 @@ const Chat = (props) => {
   const activeThreadId = useSelector(state => state.chat.activeThreadId);
   const activeThread = useSelector(state => state.chat.threads.find(t => t.id === activeThreadId));
   const messages = activeThread ? activeThread.messages : [];
-
+  
  
 
   
@@ -38,7 +38,8 @@ const Chat = (props) => {
    
   };
 
- 
+  console.log("activeThread value:", activeThreadId);
+  console.log("messages value:", messages);
     
   return (
     <div className="flex max-w-full flex-1 flex-col container  border border-black/10 dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] ">
@@ -64,9 +65,7 @@ const Chat = (props) => {
         <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu">
         {messages.length > 0 ? (
             messages.map(message => (
-                <div key={message.id} className={message.sender}>
-                    {message.content}
-                </div>
+                <Message key={message.id} message={{role: message.sender, content: message.content}} />
             ))
         ) : (
             <div className="py-10 relative w-full flex flex-col h-full"> 

@@ -7,7 +7,9 @@ export const sendMessage = createAsyncThunk(
   async ( { message, thread_id },{ rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(`/chat/`, { query: message });
+      console.log("API response:", response);
       if (response.status !== 201 && response.status !== 200) throw new Error(response.statusText);
+      console.log("threadId: ", thread_id);
       return {data: response.data, thread_id };
     } catch (error) {
       return rejectWithValue(error.message);
@@ -33,7 +35,7 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState: {
     threads: [],
-    activeThreadId: null,
+    activeThreadId: [],
     status: 'idle',
     error: null,
   },
