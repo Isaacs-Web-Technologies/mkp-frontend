@@ -137,6 +137,12 @@ const SignInPage = () => {
        <button
           type="submit"
           className="bg-transparent border-none py-[25.96px]  outline-none text-white "
+          onKeyDown={e => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              handleSubmit(e);
+              e.preventDefault();
+            }
+          }}
         >
           Continue
         </button>
