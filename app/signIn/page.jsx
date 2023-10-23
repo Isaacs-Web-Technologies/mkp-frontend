@@ -59,7 +59,7 @@ const SignInPage = () => {
           }
       
           // Redirect to the dashboard or another protected page
-          setTimeout(() => router.push("/Dashboard"), 2000);
+          router.push("/Dashboard")
         } catch (error) {
           console.error(error);
       
