@@ -10,7 +10,18 @@ import { BiLinkExternal } from "react-icons/bi";
 import { FiMessageSquare } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
-import { setThreads, openThread, startNewThread } from '@/redux/chatSlice';
+import { useRouter } from "next/navigation";
+
+
+const handleLogout = async (router) => {
+  try {
+    router.push('/signIn');
+    const response = await AxiosInstance.post('/auth/logout');
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const ChatThread = ({ title, id }) => {
   const dispatch = useDispatch();
@@ -92,7 +103,10 @@ const Sidebar = () => {
           Get help
         </a>
         <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm"
-          href="/">
+          href="/" onClick={(e) => {
+            e.preventDefault();
+            handleLogout(router);
+          }}>
           <MdLogout className="h-4 w-4" />
           Log out
         </a>
