@@ -24,7 +24,7 @@ export default function Dashboard() {
         </div>
       
       </div>
-      <History className="sm:hidden md: hidden" />
+      {/* <History className="sm:hidden md: hidden" /> */}
       <Chat toggleComponentVisibility={toggleComponentVisibility} />
       
       
