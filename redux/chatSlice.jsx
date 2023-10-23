@@ -54,12 +54,12 @@ export const sendMessage = createAsyncThunk(
         dispatch(chatSlice.actions.updateActiveThreadId(thread_id));
       }
       // Start streaming the response
-      // setTimeout(() => {
+      setTimeout(() => {
       store.dispatch(streamResponse({
         thread_id: thread_id,
         response_id: response.data.chat.id
       }));
-      // }, 1000);
+      }, 1000);
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -91,7 +91,6 @@ const streamResponse = createAsyncThunk(
           content: decodedChunk
         }));
       }
-      dispatch(getMessage({thread_id, message_id: response_id}));
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -167,23 +166,6 @@ export const getMessages = createAsyncThunk(
       sender: chat.chat_type == 'RESPONSE' ? 'ai' : 'user'
     }));
     dispatch(chatSlice.actions.openThread({thread_id, messages}));
-  }
-)
-
-const getMessage = createAsyncThunk(
-  'chat/getMessage',
-  async ({thread_id, message_id}, {rejectWithValue, dispatch}) => {
-    try {
-      const response = await AxiosInstance.get(`/chat/${message_id}`);
-      console.log("API response:", response);
-      if (response.status !== 200) {
-        return rejectWithValue(response.statusText);
-      }
-      const content = response.data.content;
-      dispatch(chatSlice.actions.updateMessage({id: message_id, content, thread_id}));
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
   }
 )
 
@@ -263,7 +245,7 @@ const chatSlice = createSlice({
       if (activeThread === undefined) return;
       const response = activeThread.messages.find(msg => msg.id === action.payload.response_id);
       if (response === undefined) return;
-      response.content += ` ${action.payload.content}`;
+      response.content += `${action.payload.content}`;
     },
     addResponse: (state, action) => {
       const thread = state.threads.find(t => t.id === action.payload.thread_id || t.id === state.activeThreadId);
@@ -280,15 +262,6 @@ const chatSlice = createSlice({
         sender: 'ai',
         id: action.payload.response.id,
       });
-    },
-    updateMessage: (state, action) => {
-      const activeThread = state.threads.find(t => t.id === action.payload.thread_id);
-      if (activeThread) {
-        const message = activeThread.messages.find(msg => msg.id === action.payload.id);
-        if (message) {
-          message.content = action.payload.content;
-        }
-      }
     },
     startNewThread: (state, action) => {
       var thread = state.threads.find(t => t.id === null)
