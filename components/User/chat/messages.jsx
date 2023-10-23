@@ -1,13 +1,13 @@
 import { SiOpenai } from "react-icons/si";
 import { AiOutlineUser} from "react-icons/ai"
 import { TbCursorText } from "react-icons/tb";
+import Markdown from 'react-markdown';
 
 const Message = (props) => {
   const { message } = props;
   const { role, content: text } = message;
 
   const isUser = role === "user";
-  console.log("message value:", message);
   return (
     <div
       className={`group w-full text-gray-800 dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50 ${
@@ -42,7 +42,7 @@ const Message = (props) => {
                 {!isUser && text === null ? (
                   <TbCursorText className="h-6 w-6 animate-pulse" />
                 ) : (
-                  <p>{text}</p>
+                  <Markdown>{text}</Markdown>
                 )}
               </div>
             </div>

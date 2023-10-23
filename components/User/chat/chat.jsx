@@ -5,7 +5,7 @@ import { BsChevronDown, BsPlusLg } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Message from "@/components/User/chat/messages";
 import { useDispatch, useSelector } from 'react-redux';
-import { sendMessage } from '@/redux/chatSlice';
+import { sendMessage, startNewThread } from '@/redux/chatSlice';
   
 
 
@@ -15,19 +15,21 @@ const Chat = (props) => {
   const [message, setmessage] = useState('');
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
-  const threads = useSelector(state => state.chat.threads);
   const activeThreadId = useSelector(state => state.chat.activeThreadId);
   const activeThread = useSelector(state => state.chat.threads.find(t => t.id === activeThreadId));
   const messages = activeThread ? activeThread.messages : [];
+  const messageListRef = useRef(null);
+
+  useEffect(() => {
+    messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+  }, [messages]);
   
  
-
-  
-
- const handleNewThread = () => {
-    const newThreadId = `thread_${Date.now()}`;
-    dispatch(startNewThread(newThreadId));
-  };
+  useEffect(() => {
+    if (activeThread === undefined) {
+      dispatch(startNewThread());
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,9 +39,6 @@ const Chat = (props) => {
     }
    
   };
-
-  console.log("activeThread value:", activeThreadId);
-  console.log("messages value:", messages);
     
   return (
     <div className="flex max-w-full flex-1 flex-col container  border border-black/10 dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] ">
@@ -62,7 +61,7 @@ const Chat = (props) => {
       <div className="relative h-full w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
       {/* chat container */}
         
-        <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu">
+        <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu" ref={messageListRef}>
         {messages.length > 0 ? (
             messages.map(message => (
                 <Message key={message.id} message={{role: message.sender, content: message.content}} />

@@ -1,33 +1,44 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AxiosInstance from '@/components/axiosInstance';
 import { store } from '@/redux/store';
+import Cookies from "js-cookie";
+
+
+export async function* getIterableStream(body) {
+  const reader = body.getReader()
+  const decoder = new TextDecoder()
+
+  while (true) {
+    const { value, done } = await reader.read()
+    if (done) {
+      break
+    }
+    const decodedChunk = decoder.decode(value, { stream: true })
+    yield decodedChunk
+  }
+}
+
 // Async thunk for sending a message to AI
 export const sendMessage = createAsyncThunk(
   'chat/sendMessage',
-  async ( { message, thread_id },{ rejectWithValue }) => {
+  async ( { message, thread_id },{ rejectWithValue, dispatch }) => {
     var payload = {query: message};
     var isNewThread = true;
-    store.dispatch(chatSlice.actions.addQuery(message));
+    dispatch(chatSlice.actions.addQuery(message));
     try {
       if (thread_id !== null) {
         payload.thread_id = thread_id;
         isNewThread = false;
       }
-      const response = await AxiosInstance.post(`/chat/`, payload);
+      const response = await AxiosInstance.post(`/chat/?stream=true`, payload);
       console.log("API response:", response);
       if (response.status !== 201 && response.status !== 200) {
         throw new Error(response.statusText);
       }
       thread_id = response.data.chat.thread_id;
-      // If this is a new thread, we need to update the thread_id
-      // in the redux store
-      if (isNewThread) {
-        store.dispatch(chatSlice.actions.startNewThread(thread_id));
-      }
-      console.log("threadId: ", thread_id);
-
-      return {
-        query: {
+      
+      dispatch(chatSlice.actions.addResponse({
+        query : {
           content: message,
           id: response.data.chat.previous_chat_id,
         },
@@ -36,12 +47,160 @@ export const sendMessage = createAsyncThunk(
           id: response.data.chat.id,
         },
         thread_id: thread_id,
-      };
+      }));
+      // If this is a new thread, we need to update the thread_id
+      // in the redux store
+      if (isNewThread) {
+        dispatch(chatSlice.actions.updateActiveThreadId(thread_id));
+      }
+      // Start streaming the response
+      // setTimeout(() => {
+      store.dispatch(streamResponse({
+        thread_id: thread_id,
+        response_id: response.data.chat.id
+      }));
+      // }, 1000);
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
+
+const streamResponse = createAsyncThunk(
+  'chat/streamResponse',
+  async ({thread_id, response_id}, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await fetch(
+        `https://mkpbackend-fe1c9f5599b1.herokuapp.com/chat/stream/${response_id}`,
+        {method: 'GET', headers: {'Authorization': `Bearer ${Cookies.get('token')}`}}
+      );
+
+      console.log("API response:", response);
+      if (response.status !== 200) {
+        return rejectWithValue(response.statusText);
+      }
+      const reader = response.body.getReader();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const decodedChunk = new TextDecoder().decode(value);
+        console.log(`Got chunk: ${decodedChunk}`);
+        dispatch(chatSlice.actions.onNewChunk({
+          thread_id: thread_id,
+          response_id: response_id,
+          content: decodedChunk
+        }));
+      }
+      dispatch(getMessage({thread_id, message_id: response_id}));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
+
+export const getAllThreads = createAsyncThunk(
+  'chat/getAllThreads',
+  async (payload, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await AxiosInstance.get(`/chat/threads`);
+      console.log("API response:", response);
+      if (response.status !== 200) {
+        return rejectWithValue(response.statusText);
+      }
+      const threads = response.data.threads.map(thread => ({
+        id: thread.id,
+        title: thread.title,
+        messages: []
+      }));
+      dispatch(chatSlice.actions.setThreads(threads));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
+
+export const editThreadTitle = createAsyncThunk(
+  'chat/editThreadTitle',
+  async ({title, thread_id}, {rejectWithValue, dispatch}) => {
+    dispatch(chatSlice.actions.setThreadTitle({title: title, thread_id: thread_id}));
+    const response = await AxiosInstance.patch(`/chat/thread/${thread_id}`, {title: title});
+    console.log("API response:", response);
+    if (response.status !== 200) {
+      return rejectWithValue(response.statusText);
+    }
+  }
+)
+
+export const deleteThread = createAsyncThunk(
+  'chat/deleteThread',
+  async ({thread_id}, {rejectWithValue, dispatch}) => {
+    dispatch(chatSlice.actions.setThreads(
+      store.getState().chat.threads
+      .filter(thread => thread.id !== thread_id))
+    );
+    dispatch(chatSlice.actions.startNewThread());
+    const response = await AxiosInstance.delete(`/chat/thread/${thread_id}`);
+    console.log("API response:", response);
+    if (response.status !== 200) {
+      return rejectWithValue(response.statusText);
+    }
+  }
+)
+
+export const getMessages = createAsyncThunk(
+  'chat/getMessages',
+  async ({thread_id}, {rejectWithValue, dispatch}) => {
+    var messages = store.getState().chat.threads.find(t => t.id === thread_id)?.messages || [];
+    dispatch(chatSlice.actions.openThread({thread_id, messages}));
+    if (messages.length > 0) {
+      return;
+    }
+    const response = await AxiosInstance.get(`/chat/all?thread_id=${thread_id}`);
+    console.log("API response:", response);
+    if (response.status !== 200) {
+      return rejectWithValue(response.statusText);
+    }
+    const chats = response.data.chats;
+    messages = chats.map(chat => ({
+      content: chat.content,
+      id: chat.id,
+      sender: chat.chat_type == 'RESPONSE' ? 'ai' : 'user'
+    }));
+    dispatch(chatSlice.actions.openThread({thread_id, messages}));
+  }
+)
+
+const getMessage = createAsyncThunk(
+  'chat/getMessage',
+  async ({thread_id, message_id}, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await AxiosInstance.get(`/chat/${message_id}`);
+      console.log("API response:", response);
+      if (response.status !== 200) {
+        return rejectWithValue(response.statusText);
+      }
+      const content = response.data.content;
+      dispatch(chatSlice.actions.updateMessage({id: message_id, content, thread_id}));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
+
+
+export const deleteAllThreads = createAsyncThunk(
+  'chat/deleteAllThreads',
+  async (payload, {rejectWithValue, dispatch}) => {
+    dispatch(chatSlice.actions.setThreads([]));
+    dispatch(chatSlice.actions.startNewThread());
+    const response = await AxiosInstance.delete(`/chat/threads`);
+    console.log("API response:", response);
+    if (response.status !== 200) {
+      return rejectWithValue(response.statusText);
+    }
+  }
+)
+
 
 // Async thunk for deleting a message
 // export const deleteMessage = createAsyncThunk(
@@ -63,13 +222,17 @@ const chatSlice = createSlice({
   initialState: {
     threads: [],
     activeThreadId: null,
-    isNewThread: true,
     status: 'idle',
     error: null,
   },
   reducers: {
     setThreads: (state, action) => {
       state.threads = action.payload;
+    },
+    setThreadTitle: (state, action) => {
+      const thread = state.threads.find(t => t.id === action.payload.thread_id);
+      if (thread === undefined) return;
+      thread.title = action.payload.title;
     },
     setMessages: (state, action) => {
       const thread = state.threads.find(t => t.id === action.payload.thread_id);
@@ -83,7 +246,6 @@ const chatSlice = createSlice({
       thread.messages = action.payload.messages;
     },
     updateActiveThreadId: (state, action) => {
-      console.log("updateActiveThreadId: ", action.payload);
       state.activeThreadId = action.payload;
     },
     addQuery: (state, action) => {
@@ -94,6 +256,38 @@ const chatSlice = createSlice({
           sender: 'user',
           id: `${Date.now()}`, // Placeholder ID
         });
+      }
+    },
+    onNewChunk: (state, action) => {
+      const activeThread = state.threads.find(t => t.id === action.payload.thread_id);
+      if (activeThread === undefined) return;
+      const response = activeThread.messages.find(msg => msg.id === action.payload.response_id);
+      if (response === undefined) return;
+      response.content += ` ${action.payload.content}`;
+    },
+    addResponse: (state, action) => {
+      const thread = state.threads.find(t => t.id === action.payload.thread_id || t.id === state.activeThreadId);
+      if (thread === undefined) return;
+      if (thread.id === null) {
+        thread.id = action.payload.thread_id;
+      }
+      
+      // replace placeholder ID with actual ID
+      const query = thread.messages[thread.messages.length - 1];
+      query.id = action.payload.query.id;
+      thread.messages.push({
+        content: action.payload.response.content,
+        sender: 'ai',
+        id: action.payload.response.id,
+      });
+    },
+    updateMessage: (state, action) => {
+      const activeThread = state.threads.find(t => t.id === action.payload.thread_id);
+      if (activeThread) {
+        const message = activeThread.messages.find(msg => msg.id === action.payload.id);
+        if (message) {
+          message.content = action.payload.content;
+        }
       }
     },
     startNewThread: (state, action) => {
@@ -116,13 +310,7 @@ const chatSlice = createSlice({
       if (activeThread) {
         activeThread.messages = activeThread.messages.filter(msg => msg.id !== action.payload);
       }
-    },
-    // deleteThread: (state, action) => {
-    //   state.threads = state.threads.filter(thread => thread.id !== action.payload);
-    //   if (state.activeThreadId === action.payload) {
-    //     state.activeThreadId = null;
-    //   }
-    // }
+    }
   },
   extraReducers: builder => {
     builder
@@ -130,20 +318,7 @@ const chatSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        const thread = state.threads.find(t => t.id === null || t.id === action.payload.thread_id);
-        if (thread === undefined) return;
-        if (thread.id === null) {
-          thread.id = action.payload.thread_id;
-        }
-        
-        // replace placeholder ID with actual ID
-        const query = thread.messages[thread.messages.length - 1];
-        query.id = action.payload.query.id;
-        thread.messages.push({
-          content: action.payload.response.content,
-          sender: 'ai',
-          id: action.payload.response.id,
-        });
+        state.status = "idle"
       })
       .addCase(sendMessage.rejected, (state, action) => {
         state.status = 'failed';
@@ -158,7 +333,7 @@ const chatSlice = createSlice({
 },
 });
 export const {
-  startNewThread, removeMessage, deleteThread,
+  startNewThread, removeMessage,
   setThreads, openThread, updateActiveThreadId,
   setMessages
 } = chatSlice.actions; // Exporting actions

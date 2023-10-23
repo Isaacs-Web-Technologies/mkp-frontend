@@ -1,15 +1,19 @@
 import AxiosInstance from "@/components/axiosInstance";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   AiOutlineMessage,
   AiOutlinePlus,
   AiOutlineUser,
   AiOutlineSetting,
+  AiOutlineCheckCircle,
 } from "react-icons/ai";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { GiCancel } from "react-icons/gi";
 import { BiLinkExternal } from "react-icons/bi";
-import { FiMessageSquare } from "react-icons/fi";
+import { FiMessageSquare, FiEdit2 } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
+import { deleteThread, openThread, startNewThread, getAllThreads, editThreadTitle, getMessages, deleteAllThreads } from '@/redux/chatSlice';
 import { useRouter } from "next/navigation";
 
 
@@ -25,23 +29,69 @@ const handleLogout = async (router) => {
 
 const ChatThread = ({ title, id }) => {
   const dispatch = useDispatch();
+  const isActive = useSelector(state => state.chat.activeThreadId === id);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(title);
+  const style = {};
+  if (isActive) {
+    style.backgroundColor = "#faebd7e8";
+  }
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setEditedTitle(title);
+  }
+
+  const handleDeleteClick = () => {
+    dispatch(deleteThread({thread_id: id}));
+  }
+
+  const handleSaveClick = () => {
+    if (editedTitle !== title) {
+      setIsEditing(false);
+      dispatch(editThreadTitle({thread_id: id, title: editedTitle}));
+    }
+  };
+
   return (
-    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group" onClick={() => {
-      AxiosInstance.get(`/chat/all?thread_id=${id}`).then(response => {
-        const chats = response.data.chats;
-        const messages = chats.map(chat => ({
-          content: chat.content,
-          id: chat.id,
-          sender: chat.chat_type == 'RESPONSE' ? 'ai' : 'user'
-        }));
-        dispatch(openThread({thread_id: id, messages: messages}))
-      })
+    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group" style={style} onClick={() => {
+      dispatch(getMessages({thread_id: id}));
     }}>
       <FiMessageSquare className="h-4 w-4" />
-      <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+      {isEditing ? (
+        <input
+          type="text"
+          value={editedTitle}
+          onChange={(e) => setEditedTitle(e.target.value)}
+          style={{ maxWidth: "65%" }}
+          className="rounded-lg border-none"
+        />
+      ) : (
+        <div style={{maxWidth: "65%"}} className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+          {title}
+        </div>
+      )}
+      <div className="absolute inset-y-3 right-0 w-8 z-10 pr-1">
+        {isActive && (isEditing ? (
+          <>
+          <AiOutlineCheckCircle onClick={handleSaveClick}/>
+          <GiCancel onClick={handleCancelClick}/>
+          </>
+        ) : (
+          <>
+          <FiEdit2 onClick={handleEditClick}/>
+          <RiDeleteBin6Line onClick={handleDeleteClick}/>
+          </>
+        ))}
+      </div>
+      {/* <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
         {title}
         <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
-      </div>
+      </div> */}
     </a>
   )
 }
@@ -49,21 +99,10 @@ const ChatThread = ({ title, id }) => {
 const Sidebar = () => {
   const threads = useSelector(state => state.chat.threads);
   const dispatch = useDispatch();
-  console.log("threads value:", threads);
+  const router = useRouter();
 
   useEffect(() => {
-    console.log("threads value:", threads);
-    AxiosInstance.get(`/chat/threads`).then(response => {
-      if (response.status !== 200) throw new Error(response.statusText);
-      const threads = response.data.threads;
-      const allThreads = [{id: null, messages: [], title: "New Thread"}];
-      console.log("threads: ", threads);
-      dispatch(setThreads(threads.map(thread => ({
-          id: thread.id,
-          title: thread.title,
-          messages: []
-      }))));
-    });
+    dispatch(getAllThreads());
   }, []);
   return (
     <div className="scrollbar-trigger flex h-full w-full flex-1 items-start bg-primary border-white/20">
@@ -82,7 +121,9 @@ const Sidebar = () => {
             ))}
           </div>
         </div>
-        <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm">
+        <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm" onClick={() => {
+          dispatch(deleteAllThreads())
+        }}>
           <AiOutlineMessage className="h-4 w-4" />
           Clear conversations
         </a>
