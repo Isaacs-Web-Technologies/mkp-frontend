@@ -48,19 +48,19 @@ const SignInPage = () => {
             });
             
           // handle response
-          promiseResolve("successfully created account")
+          promiseResolve("successfully logged in")
           console.log(response.data);
 
        
       
           if (response.status === 200) {
             // Update the access token with the new one
-            const access_token = response.data.atoken;
+            const access_token = response.data.auth_info.atoken; //initialize other auth info in future
             Cookies.set("token", access_token, { expires: 7 }); // Update the access token in the cookie
           }
       
           // Redirect to the dashboard or another protected page
-          setTimeout(() => router.push("/chatPage"), 2000);
+          router.push("/Dashboard")
         } catch (error) {
           console.error(error);
       
@@ -138,6 +138,12 @@ const SignInPage = () => {
        <button
           type="submit"
           className="bg-transparent border-none py-[25.96px]  outline-none text-white "
+          onKeyDown={e => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              handleSubmit(e);
+              e.preventDefault();
+            }
+          }}
         >
           Continue
         </button>

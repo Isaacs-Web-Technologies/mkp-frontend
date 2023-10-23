@@ -80,3 +80,21 @@ body{
   rgba(0,0,0,0) 100%);
 }
 
+
+.react-scroll-to-bottom--css-ikyem-1n7m0yu {
+  
+  overflow-y: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .history {
+    display: none; 
+  }
+}
