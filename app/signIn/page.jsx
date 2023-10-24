@@ -44,7 +44,8 @@ const SignInPage = () => {
           const response = await AxiosInstance.post('/auth/login', {
               login: email,
               password,
-            });
+          });
+      
           // handle response
           promiseResolve("successfully logged in")
           console.log(response.data);
@@ -52,7 +53,6 @@ const SignInPage = () => {
           if (response.status === 200) {
               const access_token = response.data.auth_info.atoken;
               
-              // Assuming expiryTime is provided by the backend in the format "2023-10-30T02:24:15-00:00"
               const expiryTime = response.data.auth_info.expiryTime;
       
               // Convert the expiryTime to a timestamp
