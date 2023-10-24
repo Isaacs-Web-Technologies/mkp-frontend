@@ -5,14 +5,14 @@ import HeroImage from "@/public/images/heroImg.png"
 const Hero = () => {
   return (
     <section className="hero left-0 mx-auto flex-wrap">
-    <div>
-      <h2 className=''>
+    <div className='mt-10'>
+      <h2 >
       Discover new and exciting meal
-       <br/> with CookGPT faster than 
+       <br/> with My Kitchen Power faster than 
        <br/>ever
         </h2>
 
-        <p className="text-white text-l mb-4">
+        <p className="text-white text-l mb-4 mt-10">
               Classic and mouth-watering meals and side dishes 
               <br />for all seasons.
             </p>

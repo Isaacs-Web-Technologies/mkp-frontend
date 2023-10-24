@@ -19,8 +19,10 @@ function RootLayout({ children }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="robots" content="follow, index" />
-                <link rel="canonical" href="YOUR_WEBSITE_URL_HERE" />
+                <link rel="canonical" href="https://mykitchenpower-c3ab88b9a2f9.herokuapp.com/" />
                 <meta name="language" content="EN" />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
             </Head>
             <body>
                 <Toaster />

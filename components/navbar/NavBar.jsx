@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { AiOutlineMenu,AiOutlineClose } from 'react-icons/ai';
 import Link from "next/link";
-import MKP from '@/public/svgs/mkpLogo'
+import Image from "next/image"; 
+import MkpLogo from "@/public/images/mkpLogo.png"
+
 
  export const Navbar = () => {
   
@@ -16,9 +18,15 @@ import MKP from '@/public/svgs/mkpLogo'
 <header className="bg-white left-0 text-slate-800 w-full ease-in duration-300 fixed top-0 z-10">
    <nav className="h-[60px]  md:w-auto  mx-auto flex justify-between items-center px-5 ">
       
-      <div className=" cursor-pointer lg:w-20 md:w-10 sm:w-5" onClick={handleHamburgerClick}>
-      <MKP />
-      </div>
+   <div className="flex items-center cursor-pointer lg:w-5 md:w-5 sm:w-5" onClick={handleHamburgerClick}>
+    <Image className="ml-0"
+        src={MkpLogo}
+        width={60}
+        height={60}
+        alt="MKP Logo"
+    />
+    {/* <h6 className="ml-1 text-sm font-galada">My Kitchen Power</h6> */}
+  </div>
       
      {/* larger screen navigation */}
      <ul
