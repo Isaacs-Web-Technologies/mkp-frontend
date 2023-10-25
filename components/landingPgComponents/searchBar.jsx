@@ -1,6 +1,7 @@
 'use client'
 import {useState}from 'react';
 import { FiSend, FiHeart, FiSearch} from 'react-icons/fi';
+import Link from 'next/link';
 
 export const SearchBar = () => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -76,13 +77,11 @@ export const HistorySearchBar = () => {
           onChange={(e) => setSearchText(e.target.value)}
         
           />
-        <button
-          className="border-none "
-        >
-         
+          <Link href="/signUp">
+        <button className="border-none ">
           <FiSearch size={24} />
         </button>
-       
+        </Link>
         
       </div>
     </div>

@@ -15,7 +15,7 @@ import MkpLogo from "@/public/images/mkpLogo.png"
   };
 
   return (
-<header className="bg-white left-0 text-slate-800 w-full ease-in duration-300 fixed top-0 z-10">
+<header className="bg-white text-slate-800 w-full  fixed top-0 z-10">
    <nav className="h-[60px]  md:w-auto  mx-auto flex justify-between items-center px-5 ">
       
    <div className="flex items-center cursor-pointer lg:w-5 md:w-5 sm:w-5" onClick={handleHamburgerClick}>
