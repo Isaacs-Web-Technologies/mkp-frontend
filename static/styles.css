@@ -1,0 +1,139 @@
+html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial,Tahoma, sans-serif;
+    background: linear-gradient(144.82deg, #000000, rgba(57, 22, 26, 0));
+    background-image: url('heroImg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    display: flex;
+    color: white;
+}
+.container {
+    
+    padding: 30px;
+    border-radius: 0px;
+    text-align:left;
+    max-width: 80%;
+    max-height: 100%;
+    margin-top: 0%;
+}
+.body{
+    margin:0%;
+    padding: 0%;
+    border:0em;
+}
+.animate{
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    text-decoration-line: none;
+    text-decoration: none; 
+}
+.animate a{
+    text-decoration-line: none;
+    text-decoration: none;
+    color:#48160af7 ;
+}
+.search-example-animation-container {
+    text-decoration-line: none;
+    text-decoration: none;
+    margin-top: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 70%;
+    height: 80px;
+    position: relative;
+}
+.search-example-animation-container p{
+    margin-left: 15px;
+    text-decoration-line: none;
+    text-decoration: none;
+}
+.search-example-animation-container .feather.feather-search {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+.word {
+    margin: auto;
+    color: black;
+    font-weight: 700 normal 2.5em;
+    font-style: italic;
+    font-family: var(--font-poppins);   
+  }
+.btn {
+    background-color: #48160af7;
+    border: none;
+    padding: 15px 30px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+    text-decoration-line: none;
+    text-decoration: none;
+}
+.btn a{
+    text-decoration-line: none;
+    text-decoration: none;
+    color: #fff;
+}
+.btn:hover {
+    background-color: #e64a19;
+}
+.bg-white {
+    background-color: white;
+}
+
+.text-slate-800 {
+    color: #2d3748;
+}
+
+.z-10 {
+    z-index: 10;
+}
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.md\:flex {
+    display: flex; /* This would display the flex for medium-sized screens */
+}
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        font-size: 0.8rem;
+        padding: 10px 20px;
+    }
+}
