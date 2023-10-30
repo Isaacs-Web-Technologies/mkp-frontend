@@ -114,15 +114,12 @@ const SignUpPage = () => {
         success: (reason) => toast.success(reason),
         error: (reason) => toast.error(reason),
       });
-
     };
 
   
 
     return (
-
 <>    
-
 {/* heading */}
 <section className="  lg:bg-primary bg-white  h-[58rem] ">
 <div className="w-[100rem] h-[58rem] px-16 left-[574px] top-0 absolute bg-white rounded-tl-3xl rounded-bl-3x" />
@@ -213,7 +210,6 @@ const SignUpPage = () => {
             required
           />
         </div>
-
          {/*Confirm  Password Input */}
          <div className="w-full  lg:px-5 py-1 mb-5 mt-5 border-[1px] border-solid border-primary">
         <input
@@ -242,7 +238,6 @@ const SignUpPage = () => {
           Continue
         </button>
        </div>
-        
       </form>
       
       {/*  */}
@@ -283,16 +278,7 @@ const SignUpPage = () => {
     </div>
    </div>
 </div>
-
 </section>
-
-
-
-     
-
-
-
-
     </>
     );
     };

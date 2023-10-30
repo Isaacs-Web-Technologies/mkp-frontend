@@ -1,5 +1,5 @@
-import { SiOpenai } from "react-icons/si";
-import { AiOutlineUser} from "react-icons/ai"
+import MKP1 from "@/public/svgs/mkpLogo1";
+import { AiOutlineUser} from "react-icons/ai";
 import { TbCursorText } from "react-icons/tb";
 import Markdown from 'react-markdown';
 
@@ -20,7 +20,8 @@ const Message = (props) => {
             {isUser ? (
               <AiOutlineUser className="h-4 w-4 text-white" />
             ) : (
-              <SiOpenai className="h-4 w-4 text-white" />
+             
+              <MKP1 className="h-4 w-4 text-white" />
             )}
           </div>
           <div className="text-xs flex items-center justify-center gap-1 absolute left-0 top-2 -ml-4 -translate-x-full group-hover:visible !invisible">
@@ -37,7 +38,7 @@ const Message = (props) => {
         </div>
         <div className="relative flex w-[calc(100%-50px)] flex-col gap-1 md:gap-3 lg:w-[calc(100%-115px)]">
           <div className="flex flex-grow flex-col gap-3">
-            <div className={`p-2 mr-0 mt-4 mb-4 ml-1 rounded-lg ${isUser ? "bg-primary text-white" : "bg-gainsboro text-black"} min-h-20 flex flex-col items-end gap-2 whitespace-pre-wrap break-words`}>
+            <div className={`p-2 mr-0 mt-4 mb-4 ml-1 rounded-lg ${isUser ? "bg-primary text-white" : "bg-red-900 bg-opacity-95 text-white"} min-h-20 flex flex-col items-end gap-2 whitespace-pre-wrap break-words`}>
               <div className="markdown prose w-full break-words dark:prose-invert dark">
                 {!isUser && text === null ? (
                   <TbCursorText className="h-6 w-6 animate-pulse" />
