@@ -31,7 +31,7 @@ html {
     justify-content:center;
     text-decoration-line: none;
     text-decoration: none; 
-    padding-top:20dvh;
+    padding-top:10dvh;
 }
 .animate a{
     text-decoration-line: none;
@@ -67,12 +67,12 @@ html {
     transform: translateY(-50%); 
 }
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 2.8rem;
+    margin-bottom: 4dvh;
 }
 p {
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 2dvh;
 }
 .word {
     margin: auto;
@@ -122,7 +122,7 @@ p {
 }
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     p {
@@ -131,15 +131,15 @@ p {
 }
 @media screen and (max-width: 480px) {
     h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 
     p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
     .btn {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         padding: 10px 20px;
     }
 }
