@@ -1,5 +1,5 @@
 // layout.js
-import '../styles/globals.css';
+import '../public/styles/globals.css';
 import { Toaster } from 'react-hot-toast';
 import Head from 'next/head';
 import { Providers } from '@/redux/provider';
