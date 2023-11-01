@@ -9,13 +9,11 @@ const AxiosInstance = axios.create({
 
 AxiosInstance.interceptors.request.use((config) => {
   // Retrieve the token from the cookie
-  const token = Cookies.get("token");
+  const token = Cookies.get("atoken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`; // Include the token in the Authorization header
     }
     return config;
-  }, (error) => {
-    return Promise.reject(error);
-});
+  });
 
 export default AxiosInstance;

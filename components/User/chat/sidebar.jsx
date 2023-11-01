@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
   AiOutlineMessage,
   AiOutlinePlus,
-  AiOutlineUser,
   AiOutlineSetting,
   AiOutlineCheckCircle,
 } from "react-icons/ai";
@@ -13,19 +12,9 @@ import { BiLinkExternal } from "react-icons/bi";
 import { FiMessageSquare, FiEdit2 } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteThread, openThread, startNewThread, getAllThreads, editThreadTitle, getMessages, deleteAllThreads } from '@/redux/chatSlice';
+import { deleteThread, startNewThread, editThreadTitle, getMessages, deleteAllThreads } from '@/redux/chatSlice';
 import { useRouter } from "next/navigation";
-
-
-const handleLogout = async (router) => {
-  try {
-    router.push('/signIn');
-    const response = await AxiosInstance.post('/auth/logout');
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-};
+import { performLogout } from "@/components/auth";
 
 const ChatThread = ({ title, id }) => {
   const dispatch = useDispatch();
@@ -98,12 +87,9 @@ const ChatThread = ({ title, id }) => {
 
 const Sidebar = () => {
   const threads = useSelector(state => state.chat.threads);
-  const dispatch = useDispatch();
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllThreads());
-  }, []);
   return (
     <div className="scrollbar-trigger flex h-full w-full flex-1 items-start bg-primary border-white/20">
       <nav className="flex h-full flex-1 flex-col space-y-1 p-2">
@@ -146,7 +132,9 @@ const Sidebar = () => {
         <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm"
           href="/" onClick={(e) => {
             e.preventDefault();
-            handleLogout(router);
+            performLogout().then(() => {
+              router.push('/signIn');
+            });
           }}>
           <MdLogout className="h-4 w-4" />
           Log out
