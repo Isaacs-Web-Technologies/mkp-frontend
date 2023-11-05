@@ -4,10 +4,20 @@ import Chat from "@/components/User/chat/chat";
 import MobileSiderbar from "@/components/User/chat/mobileSidebar";
 import Sidebar from "@/components/User/chat/sidebar";
 import History from "@/components/User/history/history";
+import { useLoggedInUser } from "@/components/auth";
+import { useDispatch } from "react-redux";
+import { getAllThreads } from "@/redux/chatSlice";
 
 export default function Dashboard() {
   const [isComponentVisible, setIsComponentVisible] = useState(false);
+  const loggedIn = useLoggedInUser();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log(`logged in: ${loggedIn}`)
+    if (!loggedIn) return;
+    dispatch(getAllThreads());
+  }, [loggedIn])
 
   const toggleComponentVisibility = () => {
     setIsComponentVisible(!isComponentVisible);

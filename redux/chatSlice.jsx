@@ -54,12 +54,14 @@ export const sendMessage = createAsyncThunk(
         dispatch(chatSlice.actions.updateActiveThreadId(thread_id));
       }
       // Start streaming the response
-      setTimeout(() => {
-      store.dispatch(streamResponse({
-        thread_id: thread_id,
-        response_id: response.data.chat.id
-      }));
-      }, 1000);
+      if (response.data.streaming === true) {
+        setTimeout(() => {
+        store.dispatch(streamResponse({
+          thread_id: thread_id,
+          response_id: response.data.chat.id
+        }));
+        }, 1000);
+      }
     } catch (error) {
       return rejectWithValue(error.message);
     }
