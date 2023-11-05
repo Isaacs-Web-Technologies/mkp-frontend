@@ -1,9 +1,14 @@
 var word = [
-    'Teach me how to make Ewedu soup...',
-    'I have a few ingriedients, how do I cook jollof rice...',
-    'Is it possible to make Banga soup with these ingriedients:....',
-    'Give me the recipe for Sharwama...',
-    'Suggest a food menu for an African...'
+    'Try chocolate chip cookies...',
+    'Search vegan pasta recipes...',
+    'Looking for quick breakfast ideas?',
+    'Discover summer BBQ dishes',
+    'How about low-carb dinner options?',
+    'Find kid-friendly snacks',
+    'Craving spicy Thai dishes?',
+    'Explore Mediterranean salads',
+    'Need a gluten-free dessert?',
+    'Dive into holiday appetizers'
 ];
 var i = 0,
     offset = 0,
