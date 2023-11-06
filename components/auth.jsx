@@ -1,7 +1,10 @@
+"use client";
+
 import AxiosInstance from "@/components/axiosInstance";
 import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import * as Sentry from "@sentry/nextjs";
 
 
 import toast from "react-hot-toast";
@@ -40,7 +43,33 @@ async function performLogout() {
         Cookies.remove('atoken');
         Cookies.remove('rtoken');
         Cookies.remove('userType');
+        Cookies.remove('userName');
+        Cookies.remove('userId');
+        unloadSentryUser();
     }
+}
+
+
+function saveCookies({atoken, atokenExpiry, rtoken, rtokenExpiry, userType, userName, userId}) {
+    // Convert the expiryTime to a timestamp
+    const atokenExpiryTimestamp = Date.parse(atokenExpiry);
+    const rtokenExpiryTimestamp = Date.parse(rtokenExpiry);
+
+    Cookies.set('atoken', atoken, {
+        expires: new Date(atokenExpiryTimestamp),
+    });
+    Cookies.set('rtoken', rtoken, {
+        expires: new Date(rtokenExpiryTimestamp),
+    });
+    Cookies.set('userType', userType, {
+        expires: new Date(atokenExpiryTimestamp),
+    });
+    Cookies.set('userName', userName, {
+        expires: new Date(atokenExpiryTimestamp),
+    });
+    Cookies.set('userId', userId, {
+        expires: new Date(atokenExpiryTimestamp),
+    });
 }
 
 
@@ -61,29 +90,16 @@ async function performLogin({email, password}) {
     console.log(response.data);
 
     if (response.status === 200) {
-        const atoken = response.data.auth_info.atoken;
-        const atokenEpiry = response.data.auth_info.atoken_expiry;
-        const rtoken = response.data.auth_info.rtoken;
-        const rtokenExpiry = response.data.auth_info.rtoken_expiry;
-        const userType = response.data.auth_info.user_type;
-
-
-
-        // Convert the expiryTime to a timestamp
-        const atokenExpiryTimestamp = Date.parse(atokenEpiry);
-        const rtokenExpiryTimestamp = Date.parse(rtokenExpiry);
-
-
-        // Set the access_token in the cookies
-        Cookies.set('atoken', atoken, {
-            expires: new Date(atokenExpiryTimestamp),
-        });
-        Cookies.set('rtoken', rtoken, {
-            expires: new Date(rtokenExpiryTimestamp),
-        });
-        Cookies.set('userType', userType, {
-            expires: new Date(atokenExpiryTimestamp),
-        });
+        const authInfo = {
+            atoken: response.data.auth_info.atoken,
+            atokenExpiry: response.data.auth_info.atoken_expiry,
+            rtoken: response.data.auth_info.rtoken,
+            rtokenExpiry: response.data.auth_info.rtoken_expiry,
+            userType: response.data.auth_info.user_type,
+            userName: response.data.auth_info.user_name,
+            userId: response.data.auth_info.user_id,
+        }
+        saveCookies(authInfo);
         return "Successfully logged in";
     }
     else if (response.status === 401 || response.status === 404) {
@@ -118,8 +134,6 @@ async function performSignUp({firstName, /*lastName,*/ email, password/*, userna
     }
     
     // handle response
-    
-    console.log(response.data);
     if (response.status === 201) {
         return "Successfully signed up";
     } else if (response.status === 406) {
@@ -146,32 +160,31 @@ async function performRefreshLogin () {
         }
     });
 
-    // handle response
-    console.log(response.data);
-
     if (response.status === 200) {
-        const atoken = response.data.auth_info.atoken;
-        const atokenEpiry = response.data.auth_info.atoken_expiry;
-        const rtoken = response.data.auth_info.rtoken;
-        const rtokenExpiry = response.data.auth_info.rtoken_expiry;
-        const userType = response.data.auth_info.user_type;
-
-        // Convert the expiryTime to a timestamp
-        const atokenExpiryTimestamp = Date.parse(atokenEpiry);
-        const rtokenExpiryTimestamp = Date.parse(rtokenExpiry);
-
-
-        // Set the access_token in the cookies
-        Cookies.set('atoken', atoken, {
-            expires: new Date(atokenExpiryTimestamp),
-        });
-        Cookies.set('rtoken', rtoken, {
-            expires: new Date(rtokenExpiryTimestamp),
-        });
-        Cookies.set('userType', userType, {
-            expires: new Date(atokenExpiryTimestamp),
-        });
+        const authInfo = {
+            atoken: response.data.auth_info.atoken,
+            atokenExpiry: response.data.auth_info.atoken_expiry,
+            rtoken: response.data.auth_info.rtoken,
+            rtokenExpiry: response.data.auth_info.rtoken_expiry,
+            userType: response.data.auth_info.user_type,
+            userName: response.data.auth_info.user_name,
+            userId: response.data.auth_info.user_id,
+        }
+        saveCookies(authInfo);
     }
+}
+
+function loadSentryUser() {
+    Sentry.setUser({
+        id: Cookies.get('userId'),
+        username: Cookies.get('userName'),
+    });
+    console.log("Sentry user loaded");
+}
+
+function unloadSentryUser() {
+    Sentry.setUser(null);
+    console.log("Sentry user unloaded");
 }
 
 function useLoggedInUser(deps, loggedInRoute) {
@@ -187,7 +200,7 @@ function useLoggedInUser(deps, loggedInRoute) {
             return;
         }
         if (shouldLogin()) {
-            if (pathName !== '/signIn' && pathName !== '/signUp') {
+            if (pathName !== '/signIn' && pathName !== '/signUp' && pathName !== '/') {
                 toast.error("Please login to continue", {
                     id: "login-error",
                     duration: 2000,
@@ -197,13 +210,15 @@ function useLoggedInUser(deps, loggedInRoute) {
                 }, 2000);
                 return;
             }
+            unloadSentryUser();
             return;
         }
         if (loggedInRoute)
             router.push(loggedInRoute);
         setIsLoggedIn(true);
+        loadSentryUser();
     }, deps);
     return isLoggedIn;
 }
 
-export { performLogin, performSignUp, performLogout, useLoggedInUser };
+export { performLogin, performSignUp, performLogout, useLoggedInUser, loadSentryUser, unloadSentryUser };
