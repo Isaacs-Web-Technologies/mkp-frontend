@@ -119,7 +119,7 @@ async function performLogin({email, password}) {
     }
 }
 
-async function performSignUp({firstName, /*lastName,*/ email, password/*, username*/}) {
+async function performSignUp({firstName, email, password}) {
     // Handle user signup
     var response;
     try {

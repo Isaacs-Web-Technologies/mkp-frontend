@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import AxiosInstance from "@/components/axiosInstance";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -34,120 +33,87 @@ const SignInPage = () => {
   }
 
   return (
-    <section className="  lg:bg-primary bg-white  h-[51rem] ">
-      <div className="w-[100rem] h-[51rem] px-16 left-[574px] top-0 absolute bg-white rounded-tl-3xl rounded-bl-3x" />
-
-      {/* food image */}
-      <div className="hidden md:block mt-0 mb-0">
-        <p className="my-0 relative left-[21.13rem] top-[2rem] font-medium font-galada text-white ">My
-          <br />Kitchen
-          <br />Power</p>
-        <div className="relative my-0 w-[16.38rem] h-[17.06rem] top-[7.06rem] left-[5.13rem] rounded-[50%] bg-gray [filter:blur(100px)]  " />
-        <div className="absolute my-0 top-[10.06rem] left-[7.61rem] ">
-          <Image
-            className="w-full h-auto md:w-full md:h-full object-cover"
-            alt=""
+    <>
+    <div className="flex flex-col md:flex-row min-h-screen bg bg-primary">
+      <div className="flex flex-1  items-center justify-center m-0 px-4">
+        <div className="hidden md:block">
+          <Link href="https://mykitchenpower.com">
+          <h3 className="mt-4 text-left text-white text-xl">My Kitchen Power</h3>
+          </Link>
+          <Image 
             src={MkpSignupImg}
-            width={550}
-            height={550}
+            alt="Cooked meal"
+            width={400}
+            height={400}
+            className="rounded-full"
           />
-          <h3 className="relative text-[1rem] mt-10 text-center font-medium  text-white">Cook Like Never Before...</h3>
+          <h3 className="mt-4 text-left text-white text-xl">Cook Like Never Before...</h3>
         </div>
       </div>
+      <div className="flex-1 flex items-center justify-center px-4 min-h-screen">
+      <div className="w-full max-w-md">  
+     <div className="bg-white p-10  mx-0 border border-gray-300 rounded-lg shadow-md">
+     <h2 className="mb-4 text-2xl font-bold text-center">Create your account</h2>
 
-      {/* email input div */}
-      <div className="max-w-md mx-auto text-center  lg:top-0 lg:absolute lg:left-[800px] justify-content-center d-flex ">
-        <div className=" top-[6.44rem] justify-content-center  text-left text-black">
-
-          <h2 className=" text-center  ">Welcome Back</h2>
-          <p className="text-center">To keep connected with us please
-            <br />login with your personal info </p>
+    
+        <form onSubmit={handleSubmit}>
+        <div className="space-y-4 pr-4">
+        <div>
+            <label htmlFor="email" className="sr-only">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-md"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div>
+            <label htmlFor="password" className="sr-only">Password</label>
+            {/* Password Input */}
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                id="password"
+                name="password"
+                className="w-full p-2 border border-gray-300 rounded-md"
+                placeholder="*********"
+                required
+              />
+            </div>
         </div>
 
 
-        {/* Form for collecting email */}
-        <form onSubmit={handleSubmit}>
-          <div className="w-full h-full lg:px-5 py-2 mb-5 mt-5 border-[1px] border-solid border-primary">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full h-full  py-4 bg-transparent border-none outline-none "
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-
-          {/* Password Input */}
-          <div className="w-full h-full lg:px-5 py-2 mb-5 mt-5 border-[1px] border-solid border-primary">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id="password"
-              name="password"
-              className="w-full h-full  py-4 bg-transparent border-none outline-none"
-              placeholder="XXXXXXXXXX"
-              required
-            />
-          </div>
-
-
-          <div className="w-full h-full lg:px-[22px]  mb-5 mt-5 bg-primary  flex justify-center  ">
-            <button
-              type="submit"
-              className="bg-transparent border-none py-[25.96px]  outline-none text-white "
-              onKeyDown={e => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  handleSubmit(e);
-                  e.preventDefault();
-                }
-              }}
-            >
-              Continue
-            </button>
-          </div>
+            <div className="mt-6">
+              <button
+                type="submit"
+                className="w-full p-3 bg-primary text-white rounded-md hover:bg-orange-600 transition"
+                onKeyDown={e => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    handleSubmit(e);
+                    e.preventDefault();
+                  }
+                }}
+              >
+                Continue
+              </button>
+            </div>
 
         </form>
         {/*  */}
-        <p className="text-center">Don't have an account? <Link href="./signUp" className="underline text-blue-600">Signup</Link></p>
-        <div className="justify-content-center  inline-block">
-          <div className=" box-border w-[15.63rem] h-[0.06rem]  border-solid border-black" />
-          <div className=" box-border w-[15.63rem] h-[0.06rem]  border-solid border-black" />
-          <h3 className="  ">OR</h3>
+        <p className="mt-4 text-center">
+          Don't have an account?
+           <Link href="./signUp" 
+           className="hover:underline text-blue-600">Signup
+           </Link>
+        </p>
         </div>
-
-        {/*  */}
-        <div className="grid  place-items-center ">
-
-          <div className="flex items-center">
-            <Image className=" w-[1.88rem] h-[1.88rem] overflow-hidden"
-              alt="" src={Apple}
-              width={30}
-              height={30} />
-            <h3 className="">Continue with Apple</h3>
-          </div>
-
-          <div className="flex items-center">
-            <Image className=" w-[1.88rem] h-[1.88rem] overflow-hidden"
-              alt=""
-              src={Microsoft}
-              width={30}
-              height={30} />
-            <h3 className="">Continue with Microsoft Account</h3>
-          </div>
-
-          <div className="flex items-center">
-            <Image className=" w-[1.88rem] h-[1.88rem] overflow-hidden"
-              alt=""
-              src={GoogleIcon}
-              width={30}
-              height={30} />
-            <h3 className="">Continue with Google</h3>
-          </div>
         </div>
       </div>
-    </section>
+    </div>
+     </> 
   );
 };
 export default SignInPage;
