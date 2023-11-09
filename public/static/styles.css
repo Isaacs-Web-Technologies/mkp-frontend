@@ -1,7 +1,7 @@
 html{
     margin: 0;
     padding: 0;
-    background-image: url('heroImg.png');
+    background-image: url('heroImg.webp'); 
     background-size: cover;
     background-repeat: no-repeat; 
     width:100%;
