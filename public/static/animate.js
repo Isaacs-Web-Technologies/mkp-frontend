@@ -1,12 +1,12 @@
 var word = [
-    'Try chocolate chip cookies...',
-    'Search vegan pasta recipes...',
-    'Looking for quick breakfast ideas?',
-    'Discover summer BBQ dishes',
+    'How do I make chocolate chip cookies?',
+    'Give me a vegan pasta recipe',
+    'Can I cook fried rice with these ingriedients?...',
+    'What kind of recipe can I prepare with these ingriedients...',
     'How about low-carb dinner options?',
-    'Find kid-friendly snacks',
+    'Give me kid-friendly snacks',
     'Craving spicy Thai dishes?',
-    'Explore Mediterranean salads',
+    'How do I cook banga soup?',
     'Need a gluten-free dessert?',
     'Dive into holiday appetizers'
 ];
