@@ -11,18 +11,22 @@ html {
 }
 @media (min-width: 768px) and (max-width: 1024px) {
     html {
-        background-size: 100vh 100vh;
+        background-size: cover;
     }
 }
 @media (max-width:877px) {
     html {
-        background-size:120vh 100vh;
+        background-size:cover;
     }
 }
 @media (max-width: 767px) {
     html {
         background-size: 80vh 100vh; 
     }
+    .animate {
+        margin-top: 10%;
+    }
+
 }
 @media only screen and (max-width: 320px){
     html {
@@ -41,7 +45,7 @@ html {
 }
 @media only screen and (min-width:1024px) and (max-width: 1366px) {
     html {
-        background-size:auto;
+        background-size:cover;
     }
     .heroWriteup h3 {
         font-size:1.8rem;
@@ -50,7 +54,9 @@ html {
         font-size: 1rem;
     }
 }
-@media only screen and (max-device-width:320px) and (max-device)
+@media only screen and (max-device-width:320px) and (max-device-height: 320px), 
+(max-device-width: 320px) and (max-device-height: 384px), 
+(max-device-width: 360px) and (max-device-height: 360px)
 {
     html {
         background-size:cover;
@@ -59,6 +65,28 @@ html {
         font-size: 0.8rem; 
     }
  }
+ @media only screen and (min-width: 424px) and (max-width: 1262px) {
+    html {
+        background-size: 100vh 100vh;
+    }
+    .heroWriteup h3 {
+        font-size: 1.6rem;
+    }
+    .heroWriteup p {
+        font-size: 1rem;
+    }
+}
+@media only screen and (min-width: 462px) and (max-width: 1262px) {
+    html {
+        background-size:cover;
+    }
+    .heroWriteup h3 {
+        font-size: 1.6rem;
+    }
+    .heroWriteup p {
+        font-size: 1rem;
+    }
+}
 .hero{
     margin: 0px;
     padding: 0px;
@@ -76,7 +104,7 @@ html {
   margin: auto;
   font-size: 1.6rem;
   font-weight: bold; 
-  transition: all 3000ms ease-in;
+  transition: all 300ms ease-in;
   padding-top:8rem;
 } 
 .heroWriteup p{
@@ -101,9 +129,6 @@ html {
     .heroWriteup p{
         font-size: 20px;
         font-weight: 50px;
-    }
-    .btn{
-        margin-top: 1rem;
     }
 }
 body{
@@ -134,7 +159,7 @@ body{
 }
 @media (min-width:680px) and (max-width:900px) {
    .animate {
-    margin-top:40%;
+    margin-top:20%;
    }
 }
 .animate a{
@@ -178,27 +203,6 @@ body{
     font-family: 'Lato', sans-serif;
     padding: 10px; 
   }
-.btn {
-    background-color: rgba(57, 22, 26, 1);
-    border: none;
-    color: white;
-    border-radius: 100px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    padding: 10px 20px;
-    transition: 0.3s;
-    text-decoration-line: none;
-    text-decoration: none;
-    margin-top:2rem;
-}
-.btn a{
-    text-decoration-line: none;
-    text-decoration: none;
-    color: #fff;
-}
-.btn:hover {
-    background-color: #e64a19;
-}
 .bg-white {
     background-color: rgb(122, 115, 115);
 }
