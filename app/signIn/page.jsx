@@ -9,9 +9,7 @@ import Microsoft from "@/public/images/microsoft.png"
 import Apple from "@/public/images/apple.png"
 import MkpSignupImg from "@/public/images/mkpSignupImg.png"
 import Link from "next/link";
-import Cookies from "js-cookie";
 import { performLogin, useLoggedInUser } from "@/components/auth";
-
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
@@ -21,10 +19,13 @@ const SignInPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    toast.loading("Logging in...", { id: "login" });
+    toast.loading("Gathering recipes...", { id: "login" });
     performLogin({ email, password }).then((msg) => {
       toast.success(msg, { id: "login" });
+      const loadingToast = toast.loading("Enjoy your meal...");
+
       setTimeout(() => {
+        toast.dismiss(loadingToast);
         router.push("/Dashboard");
       }, 2000);
     }).catch((msg) => {
@@ -34,7 +35,7 @@ const SignInPage = () => {
 
   return (
     <>
-    <div className="flex flex-col md:flex-row min-h-screen bg bg-primary">
+    <div className="flex flex-col md:flex-row min-h-screen bg-primary">
       <div className="flex flex-1  items-center justify-center m-0 px-4">
         <div className="hidden md:block">
           <Link href="https://mykitchenpower.com">
@@ -43,8 +44,8 @@ const SignInPage = () => {
           <Image 
             src={MkpSignupImg}
             alt="Cooked meal"
-            width={400}
-            height={400}
+            width={480}
+            height={470}
             className="rounded-full"
           />
           <h3 className="mt-4 text-left text-white text-xl">Cook Like Never Before...</h3>
@@ -52,8 +53,8 @@ const SignInPage = () => {
       </div>
       <div className="flex-1 flex items-center justify-center px-4 min-h-screen">
       <div className="w-full max-w-md">  
-     <div className="bg-white p-10  mx-0 border border-gray-300 rounded-lg shadow-md">
-     <h2 className="mb-4 text-2xl font-bold text-center">Create your account</h2>
+     <div className="bg-red p-10  mx-0 border border-gray-300 rounded-lg shadow-md">
+     <h2 className="mb-4 text-2xl font-bold text-center">Welcome back</h2>
 
     
         <form onSubmit={handleSubmit}>
@@ -79,7 +80,7 @@ const SignInPage = () => {
                 id="password"
                 name="password"
                 className="w-full p-2 border border-gray-300 rounded-md"
-                placeholder="*********"
+                placeholder="Password"
                 required
               />
             </div>
@@ -89,7 +90,7 @@ const SignInPage = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full p-3 bg-primary text-white rounded-md hover:bg-orange-600 transition"
+                className="w-full p-3 bg-tetiary text-white hover:text-black rounded-md hover:bg-white transition"
                 onKeyDown={e => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     handleSubmit(e);
