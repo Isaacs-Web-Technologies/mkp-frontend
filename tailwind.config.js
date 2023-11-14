@@ -10,10 +10,10 @@ module.exports = {
       colors: {
         "gray": "rgba(30, 30, 30, 1)", 
         "black": "#000",
-        "primary": "#f3ebe7",
+        "primary": "#9d4f4a",
         "secondary": '#6e3515',
         "tetiary": '#39161a',
-        "red": '#9d4f4a',
+        "red": '#f3ebe7',
         "gainsboro": "rgba(217, 217, 217, 0)",
       },
       fontFamily:{

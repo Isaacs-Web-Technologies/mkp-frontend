@@ -19,10 +19,13 @@ const SignInPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    toast.loading("Logging in...", { id: "login" });
+    toast.loading("Gathering recipes...", { id: "login" });
     performLogin({ email, password }).then((msg) => {
       toast.success(msg, { id: "login" });
+      const loadingToast = toast.loading("Enjoy your meal...");
+
       setTimeout(() => {
+        toast.dismiss(loadingToast);
         router.push("/Dashboard");
       }, 2000);
     }).catch((msg) => {
@@ -32,7 +35,7 @@ const SignInPage = () => {
 
   return (
     <>
-    <div className="flex flex-col md:flex-row min-h-screen bg-red">
+    <div className="flex flex-col md:flex-row min-h-screen bg-primary">
       <div className="flex flex-1  items-center justify-center m-0 px-4">
         <div className="hidden md:block">
           <Link href="https://mykitchenpower.com">
@@ -50,7 +53,7 @@ const SignInPage = () => {
       </div>
       <div className="flex-1 flex items-center justify-center px-4 min-h-screen">
       <div className="w-full max-w-md">  
-     <div className="bg-primary p-10  mx-0 border border-gray-300 rounded-lg shadow-md">
+     <div className="bg-red p-10  mx-0 border border-gray-300 rounded-lg shadow-md">
      <h2 className="mb-4 text-2xl font-bold text-center">Welcome back</h2>
 
     

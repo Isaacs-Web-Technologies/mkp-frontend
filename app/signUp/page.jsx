@@ -56,7 +56,7 @@ const SignUpPage = () => {
 
   return (
      <>
-    <div className="flex flex-col md:flex-row min-h-screen  bg-red">
+    <div className="flex flex-col md:flex-row min-h-screen  bg-primary">
       <div className="flex flex-1  items-center justify-center m-0 px-4">
         <div className="hidden md:block">
         <Link href="https://mykitchenpower.com">
@@ -74,7 +74,7 @@ const SignUpPage = () => {
       </div>
       <div className="flex-1 flex items-center justify-center px-4 min-h-screen">
       <div className="w-full max-w-md">  
-     <div className="bg-primary p-10  mx-0 border border-gray-300 rounded-lg shadow-md">
+     <div className="bg-red p-10  mx-0 border border-gray-300 rounded-lg shadow-md">
      <h2 className="mb-4 text-2xl font-bold text-center">Create your account</h2>
       
           <form onSubmit={handleSubmit}>
