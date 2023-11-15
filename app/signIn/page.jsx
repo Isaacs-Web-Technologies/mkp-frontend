@@ -38,7 +38,7 @@ const SignInPage = () => {
     <div className="flex flex-col md:flex-row min-h-screen bg-primary">
       <div className="flex flex-1  items-center justify-center m-0 px-4">
         <div className="hidden md:block">
-          <Link href="https://mykitchenpower.com">
+          <Link className="no-underline" href="https://mykitchenpower.com">
           <h3 className="mt-4 text-left text-white text-xl">My Kitchen Power</h3>
           </Link>
           <Image 
