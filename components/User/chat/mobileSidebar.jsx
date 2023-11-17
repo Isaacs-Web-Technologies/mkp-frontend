@@ -27,15 +27,15 @@ const MobileSiderbar = (props) => {
                 id="headlessui-dialog-panel-:rf:"
                 data-headlessui-state="open"
               >
-                <div className="absolute top-0 right-0 -mr-12 pt-2 bg-primary ">
+                <div className="absolute top-0 right-0 -mr-12 border-none pt-2 ">
                   <button
                     type="button"
-                    className=" mt-0 flex h-10 w-10 border-none items-center justify-center focus:outline-none  "
+                    className=" mt-0 flex h-10 w-10  items-center justify-center rounded-md  bg-primary hover:bg-red cursor-pointer focus:outline-none focus:ring-2 border-none"
                     tabIndex={0}
                     onClick={toggleComponentVisibility}
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <IoMdClose className="h-6 w-6 bg-primary " />
+                    <IoMdClose className="h-6 w-6 text-red  hover:text-black" />
                   </button>
                 </div>
                 <Sidebar />

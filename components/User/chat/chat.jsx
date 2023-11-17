@@ -6,7 +6,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Message from "@/components/User/chat/messages";
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage, startNewThread } from '@/redux/chatSlice';
-  
+import { ChatThread } from "./sidebar";
 
 
 
@@ -43,18 +43,24 @@ const Chat = (props) => {
   return (
     <div className="flex max-w-full flex-1 flex-col container  border border-black/10 dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] ">
       {/* hamburger menu for smaller screens and new chat */}
-      <div className="sticky top-0 z-10 flex items-center border-b border-white/20 bg-gray-800 pl-1 pt-1 text-gray-200 sm:pl-3 md:hidden">
+      <div className="sticky top-0 z-10 flex items-center border-b  pl-1 pt-1 text-gray-200 sm:pl-3 md:hidden">
         <button
           type="button"
-          className="-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:hover:text-white"
+          className="-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary hover:bg-primary/10 cursor-pointer  focus:outline-none focus:ring-2 border-none"
           onClick={toggleComponentVisibility}
         >
           <span className="sr-only">Open sidebar</span>
-          <RxHamburgerMenu className="h-6 w-6 text-white" />
+          <RxHamburgerMenu className="h-6 w-6 text-red hover:text-black" />
         </button>
-        <h1 className="flex-1 text-center text-base font-normal">New chat</h1>
-        <button type="button" className="px-3">
-          <BsPlusLg className="h-6 w-6" />
+        <h1 className="flex-1 text-center text-base font-normal"></h1> {/* add chat thread title here later */}
+        <button 
+        type="button"
+        className="mr-0.5 h-10 w-10 items-center justify-center rounded-md bg-primary hover:bg-primary/10 cursor-pointer focus:outline-none focus:ring-2 border-none"
+        onClick={() => {
+          dispatch(startNewThread())
+        }}
+        >
+          <BsPlusLg className="h-6 w-6 text-red hover:text-black" />
         </button>
       </div>
 
@@ -73,7 +79,7 @@ const Chat = (props) => {
                 </h1>
             </div>
         )}
-        <div className="flex flex-col items-center text-sm dark:bg-gray-800">
+        <div className="flex flex-col items-center text-sm">
       </div>
     </div>
        {/* input area */}
@@ -89,7 +95,6 @@ const Chat = (props) => {
               ) : null}
               <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-black/10 bg-gray dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
                 <textarea
-                  // ref={textAreaRef}
                   value={message}
                   tabIndex={0}
                   data-id="root"
@@ -111,7 +116,6 @@ const Chat = (props) => {
                   </textarea>
 
                 <button
-                  // disabled={isLoading || sendMessage?.length === 0}
                   onClick={handleSubmit}
                   className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 right-1 md:right-2 disabled:opacity-40"
                 >
