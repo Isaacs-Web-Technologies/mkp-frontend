@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useEffect } from "react";
+import PasswordInput from "@/components/PasswordInput";
 import toast from "react-hot-toast";
 import GoogleIcon from "@/public/images/GoogleIcon.png"
 import Microsoft from "@/public/images/microsoft.png"
@@ -65,7 +65,7 @@ const SignInPage = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 border-none rounded-md"
                 placeholder="Enter your email"
                 required
               />
@@ -73,13 +73,11 @@ const SignInPage = () => {
             <div>
             <label htmlFor="password" className="sr-only">Password</label>
             {/* Password Input */}
-              <input
-                type="password"
+              <PasswordInput
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 name="password"
-                className="w-full p-2 border border-gray-300 rounded-md"
                 placeholder="Password"
                 required
               />

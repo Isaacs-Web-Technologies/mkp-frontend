@@ -1,4 +1,3 @@
-import AxiosInstance from "@/components/axiosInstance";
 import { useEffect, useState } from "react";
 import {
   AiOutlineMessage,
@@ -23,7 +22,7 @@ const ChatThread = ({ title, id }) => {
   const [editedTitle, setEditedTitle] = useState(title);
   const style = {};
   if (isActive) {
-    style.backgroundColor = "#faebd7e8";
+    style.backgroundColor = "#f3ebe7";
   }
 
   const handleEditClick = () => {
@@ -47,7 +46,7 @@ const ChatThread = ({ title, id }) => {
   };
 
   return (
-    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group" style={style} onClick={() => {
+    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-red  cursor-pointer break-all hover:pr-4 group" style={style} onClick={() => {
       dispatch(getMessages({thread_id: id}));
     }}>
       <FiMessageSquare className="h-4 w-4" />
@@ -101,7 +100,7 @@ const Sidebar = () => {
           New chat
         </a>
         <div className="flex-col flex-1 overflow-y-auto border-b border-white/20">
-          <div className="flex flex-col gap-2 pb-2 text-gray-100 text-sm">
+          <div className="flex flex-col gap-2 pb-2 text-white hover:text-gray-500 text-sm">
             {threads.filter(t => t.id !== null).map(thread => (
               <ChatThread key={thread.id} title={thread.title} id={thread.id} />
             ))}
@@ -122,7 +121,7 @@ const Sidebar = () => {
           Settings
         </a>
         <a
-          href="https://help.openai.com/en/collections/3742473-chatgpt"
+          href="/"
           target="_blank"
           className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm"
         >

@@ -13,6 +13,7 @@ import MkpSignupImg from "@/public/images/mkpSignupImg.png"
 import Link from "next/link";
 import { resolve } from "styled-jsx/css";
 import { performSignUp, performLogin, useLoggedInUser } from "@/components/auth";
+import PasswordInput from "@/components/PasswordInput";
 
 
 
@@ -53,7 +54,6 @@ const SignUpPage = () => {
   };
 
 
-
   return (
      <>
     <div className="flex flex-col md:flex-row min-h-screen  bg-primary">
@@ -85,7 +85,7 @@ const SignUpPage = () => {
                   type="firstName"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 border-none rounded-md"
                   placeholder="Firstname"
                   required
                 />
@@ -96,7 +96,7 @@ const SignUpPage = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 border-none rounded-md"
                   placeholder="Email Address"
                   required
                 />
@@ -104,8 +104,7 @@ const SignUpPage = () => {
               <div>
               <label htmlFor="password" className="sr-only">Password</label>
               {/* Password Input */}
-                <input
-                  type="password"
+                <PasswordInput
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   id="password"
@@ -118,8 +117,7 @@ const SignUpPage = () => {
              <div>
               {/*Confirm  Password Input */}
               <label htmlFor="confirm-password" className="sr-only">Confirm Password</label>
-                <input
-                  type="password"
+                <PasswordInput
                   value={cpassword}
                   onChange={(e) => setCPassword(e.target.value)}
                   id="confirmPassword"
