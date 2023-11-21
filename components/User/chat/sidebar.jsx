@@ -121,12 +121,12 @@ const Sidebar = () => {
           Settings
         </a>
         <a
-          href="/"
+          href="https://forms.gle/SpRoNBwSgCddYQXB9"
           target="_blank"
           className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm"
         >
           <BiLinkExternal className="h-4 w-4" />
-          Get help
+          Feedback
         </a>
         <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm"
           href="/" onClick={(e) => {

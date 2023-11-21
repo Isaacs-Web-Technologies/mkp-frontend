@@ -64,7 +64,7 @@ const Chat = (props) => {
         </button>
       </div>
 
-      <div className="relative h-full w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
+      <div className="relative h-screen w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
       {/* chat container */}
         
         <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu" ref={messageListRef}>
@@ -73,7 +73,7 @@ const Chat = (props) => {
                 <Message key={message.id} message={{role: message.sender, content: message.content}} />
             ))
         ) : (
-            <div className="py-10 relative w-full flex flex-col h-full"> 
+            <div className="py-10 relative w-full flex flex-col h-screen"> 
                 <h1 className="text-2xl sm:text-4xl font-semibold text-center text-gray-200 dark:text-gray-600 flex gap-2 items-center justify-center h-screen">
                     My Kitchen Power
                 </h1>
