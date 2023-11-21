@@ -41,7 +41,7 @@ const Chat = (props) => {
   };
     
   return (
-    <div className="flex max-w-full flex-1 flex-col container  border border-black/10 dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] ">
+    <div className="flex max-w-full flex-1 h-100dvh flex-col container  border border-black/10 dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] ">
       {/* hamburger menu for smaller screens and new chat */}
       <div className="sticky top-0 z-10 flex items-center border-b  pl-1 pt-1 text-gray-200 sm:pl-3 md:hidden">
         <button
@@ -64,7 +64,7 @@ const Chat = (props) => {
         </button>
       </div>
 
-      <div className="relative h-screen w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
+      <div className="relative  w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
       {/* chat container */}
         
         <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu" ref={messageListRef}>
@@ -73,14 +73,14 @@ const Chat = (props) => {
                 <Message key={message.id} message={{role: message.sender, content: message.content}} />
             ))
         ) : (
-            <div className="py-10 relative w-full flex flex-col h-screen"> 
-                <h1 className="text-2xl sm:text-4xl font-semibold text-center text-gray-200 dark:text-gray-600 flex gap-2 items-center justify-center h-screen">
+            <div className="py-10 relative w-full flex flex-col h-[5%]"> 
+                <h1 className="text-2xl sm:text-4xl font-semibold text-center text-gray-200 dark:text-gray-600 flex gap-2 items-center justify-center h-[25%]">
                     My Kitchen Power
                 </h1>
             </div>
         )}
-        <div className="flex flex-col items-center text-sm">
-      </div>
+        {/* <div className="flex flex-col items-center text-sm">
+      </div> */}
     </div>
        {/* input area */}
        <div className=" bottom-0  w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-gray-800 md:!bg-transparent dark:md:bg-vert-dark-gradient pt-2">
@@ -103,7 +103,6 @@ const Chat = (props) => {
                     maxHeight: "200px",
                     overflowY: "hidden",
                   }}
-                  // rows={1}
                   placeholder="Send a message..."
                   className="m-0 w-full resize-none text-white border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0"
                   onChange={e => setmessage(e.target.value)}
@@ -125,7 +124,7 @@ const Chat = (props) => {
             </div>
           </form>
           {/* footer */}
-          <div className="px-3 pt-2 pb-3 text-center text-xs text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
+          <div className="px-3 pt-2 pb-3 text-center text-xs text-black/50 md:px-4 md:pt-3 md:pb-6">
             <span>
               My Kitchen Power Is Solely For Recipes.
             </span>
