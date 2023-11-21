@@ -64,7 +64,7 @@ const Chat = (props) => {
         </button>
       </div>
 
-      <div className="relative h-screen w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
+      <div className="relative h-100dvh w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
       {/* chat container */}
         
         <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu" ref={messageListRef}>
@@ -73,14 +73,14 @@ const Chat = (props) => {
                 <Message key={message.id} message={{role: message.sender, content: message.content}} />
             ))
         ) : (
-            <div className="py-10 relative w-full flex flex-col h-screen"> 
-                <h1 className="text-2xl sm:text-4xl font-semibold text-center text-gray-200 dark:text-gray-600 flex gap-2 items-center justify-center h-screen">
+            <div className="py-10 relative w-full flex flex-col h-80dvh"> 
+                <h1 className="text-2xl sm:text-4xl font-semibold text-center text-gray-200 dark:text-gray-600 flex gap-2 items-center justify-center h-[25%]">
                     My Kitchen Power
                 </h1>
             </div>
         )}
-        <div className="flex flex-col items-center text-sm">
-      </div>
+        {/* <div className="flex flex-col items-center text-sm">
+      </div> */}
     </div>
        {/* input area */}
        <div className=" bottom-0  w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-gray-800 md:!bg-transparent dark:md:bg-vert-dark-gradient pt-2">
@@ -103,7 +103,6 @@ const Chat = (props) => {
                     maxHeight: "200px",
                     overflowY: "hidden",
                   }}
-                  // rows={1}
                   placeholder="Send a message..."
                   className="m-0 w-full resize-none text-white border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0"
                   onChange={e => setmessage(e.target.value)}
