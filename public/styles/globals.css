@@ -120,38 +120,167 @@ body{
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:hover,
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:active,
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:focus {
-  scrollbar-color: #888 #f1f1f1; /* For Firefox, show scrollbar on hover/scroll */
+  scrollbar-color: #9d4f4a #8b4540; /* For Firefox, show scrollbar on hover/scroll */
 }
 
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:hover::-webkit-scrollbar-thumb,
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:active::-webkit-scrollbar-thumb,
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:focus::-webkit-scrollbar-thumb {
-  background-color: #888; /* For WebKit, show scrollbar thumb on hover/scroll */
+  background-color: #9d4f4a; /* For WebKit, show scrollbar thumb on hover/scroll */
 }
 
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:hover::-webkit-scrollbar-thumb:hover,
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:active::-webkit-scrollbar-thumb:hover,
 .react-scroll-to-bottom--css-ikyem-1n7m0yu:focus::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Darken the thumb on hover over the thumb */
+  background-color: #8b4540; /* Darken the thumb on hover over the thumb */
 }
 
-/* Hide scrollbar for IE and Edge */
-/* .react-scroll-to-bottom--css-ikyem-1n7m0yu {
-  -ms-overflow-style: none; 
-} */
-/* Hide scrollbar for WebKit (Chrome, Safari) */
-/* .react-scroll-to-bottom--css-ikyem-1n7m0yu::-webkit-scrollbar {
-  display: none; 
-} */
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.floatingImage {
+  animation: floatAnimation 3s ease-in-out infinite;
+}
+/* Typewriter.effect */
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15.625rem, 2fr));
+  gap: 1.25rem;
+  padding: 1.25rem;
+}
 
+.card {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+}
 
-textarea:focus {
-  outline: none;
+.typewriter {
+  overflow: hidden;
+  border-right: 0.15em solid black;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.15em;
+  animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* @keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: black }
+} */
+@media screen and (min-width: 768px) {
+  .cardContainer {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for large screens*/
+  }
+/* @media screen and (max-width: 768px){
+  .cardContainer{
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+} */
+@media (max-width: 668px) {
+  .cardContainer{
+    display: none;
+  } 
+}
+  .card {
+    padding: 1rem;
+  }
+}
+.card:hover {
+  background-color: #c0b3b3; /* Color change on hover */
+  transform: translateY(-8%) scale(1.1)  transform 0.5s;
+}
+.ChatTextArea {
+  height: 30px;
+  max-height: 200px;
+  overflow-y: hidden;
+  background-color: #9d4f4a; /* Or any other color you prefer */
+  color: white; /* Text color */
+  border: none;
+  padding: 0.5em; /* Adjust padding as needed */
+  resize: none;
+  font-size: 1rem; /* Adjust font size as needed */
+  position: relative;
+  margin-right: 3rem;
+}
+
+.ChatTextArea::placeholder {
+  padding: 0.5rem;
+  color: white; /* Placeholder text color */
+  opacity: 1; /* Required for some browsers */
+}
+
+.ChatTextArea:focus {
+  outline: none; /* Removes the default focus outline */
   box-shadow: none;
 }
 
-@media (max-width: 768px) {
-  .history {
-    display: none; 
+/* Media query for smaller screens (e.g., smartphones) */
+@media (max-width: 600px) {
+  .ChatTextArea {
+    font-size: 1rem; /* Slightly smaller font for smaller screens */
+    padding: 20px; /* Slightly less padding for smaller screens */
   }
+}
+
+
+.sendButton {
+  position: absolute;
+  right: 10px; 
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #9d4f4a; 
+  color: white;
+  border: 2px solid white; 
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.sendButton:hover {
+  background-color: #d46a6a; /* Color change on hover */
+  transform: translateY(-50%) scale(1.1);
+}
+
+.sendButton:focus {
+  outline: none; /* Optional: removes outline on focus */
+}
+
+.sendButton::after {
+  content: "Send a message";
+  visibility: hidden;
+  opacity: 0;
+  width: auto;
+  min-width: 2rem;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+  transition: opacity 0.3s;
+}
+
+.sendButton:hover::after {
+  visibility: visible;
+  opacity: 1;
 }
