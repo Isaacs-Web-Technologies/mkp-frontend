@@ -6,7 +6,6 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Message from "@/components/User/chat/messages";
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage, startNewThread } from '@/redux/chatSlice';
-import { ChatThread } from "./sidebar";
 // import {MKPLogo} from "@/public/images/mkpLogo.png"
 
 
@@ -19,7 +18,7 @@ const Chat = (props) => {
   const activeThread = useSelector(state => state.chat.threads.find(t => t.id === activeThreadId));
   const messages = activeThread ? activeThread.messages : [];
   const messageListRef = useRef(null);
-
+ 
   useEffect(() => {
     messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
   }, [messages]);
@@ -40,11 +39,25 @@ const Chat = (props) => {
    
   };
     
-  const handleCardClick =(messageText)=> {
-    setmessage(messageText);
-    dispatch(sendMessage({message: messageText,thread_id: activeThreadId }));
-    setmessage('');
+
+const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
+useEffect(() => {
+  const handleResize =() => {
+    setDisplayWidth(window.innerWidth);
   };
+
+  window.addEventListener("resize", handleResize);
+  return() =>{
+  window.removeEventListener("resize", handleResize);
+  };
+}, []);
+
+const handleCardClick =(messageText)=> {
+  setmessage(messageText);
+  dispatch(sendMessage({message: messageText,thread_id: activeThreadId }));
+  setmessage('');
+};
+
 
   return (
     <div className="flex max-w-full flex-1 h-100vh flex-col container  border border-black/10 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)]">
@@ -102,10 +115,12 @@ const Chat = (props) => {
               <div className="card" onClick={() => handleCardClick("What to cook eba?")}>
                   <p className="typewriter">What to cook eba?</p>
               </div>
-              <div className="card" onClick={()=> handleCardClick("Give me kid-friendly snacks")} >
+              <div className="card" onClick={()=> handleCardClick("Give me kid-friendly snacks")}
+                 style ={{ display: displayWidth <= 600 ? 'none' : 'block' }} >
                   <p className="typewriter">Give me kid-friendly snacks</p>
               </div>
-              <div className="card" onClick={()=> handleCardClick("How do I cook banga soup?")}>
+              <div className="card" onClick={()=> handleCardClick("How do I cook banga soup?")}
+                 style={{ display: displayWidth <= 600 ? 'none' : 'block' }}>
                   <p className="typewriter">How do I cook banga soup?</p>
               </div>
           </div>

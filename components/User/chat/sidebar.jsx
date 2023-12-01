@@ -14,8 +14,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteThread, startNewThread, editThreadTitle, getMessages, deleteAllThreads } from '@/redux/chatSlice';
 import { useRouter } from "next/navigation";
 import { performLogout } from "@/components/auth";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 
-const ChatThread = ({ title, id }) => {
+
+const ChatThread = ({ title, id, onClose }) => {
   const dispatch = useDispatch();
   const isActive = useSelector(state => state.chat.activeThreadId === id);
   const [isEditing, setIsEditing] = useState(false);
@@ -45,10 +47,18 @@ const ChatThread = ({ title, id }) => {
     }
   };
 
+  const handleClick = () => {
+    dispatch(getMessages({ thread_id: id }));
+
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
-    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-red/10  cursor-pointer break-all hover:pr-4 group" style={style} onClick={() => {
-      dispatch(getMessages({thread_id: id}));
-    }}>
+    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-red/10  cursor-pointer break-all hover:pr-4 group" 
+    style={style} 
+    onClick={handleClick}>
       <FiMessageSquare className="h-4 w-4" />
       {isEditing ? (
         <input
@@ -76,38 +86,69 @@ const ChatThread = ({ title, id }) => {
           </>
         ))}
       </div>
-      {/* <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-        {title}
-        <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
-      </div> */}
     </a>
   )
 }
 
-const Sidebar = () => {
+const Sidebar = ({onClose}) => {
+  const [isSidebarClosed, setSidebarClosed] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const threads = useSelector(state => state.chat.threads);
   const router = useRouter();
   const dispatch = useDispatch();
+  
+ useEffect(() =>{
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+  window.addEventListener("resize", handleResize);
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+ }, []);
 
+ const toggleSidebar = () => {
+  setSidebarClosed(!isSidebarClosed);
+ };
+
+
+  const handleItemClick = (action) => {
+    action();
+    if (onClose) {
+      onClose();
+    }
+  };
   return (
-    <div className="scrollbar-trigger flex h-100vh w-full flex-1 items-start bg-primary border-white/20">
+     <div className={`sidebar scrollbar-trigger flex h-100vh w-full flex-1 items-start bg-primary border-white/20 ${isSidebarClosed ? 'collapsed' : ''}`}>
+      {/* Sidebar content goes here */}
+
+      {/* Toggle button (visible on large screens only) */}
+      {windowWidth > 768 && (
+        <div className="toggle-button" onClick={toggleSidebar}>
+          {isSidebarClosed ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
+        </div>
+      )}  
       <nav className="flex h-full flex-1 flex-col space-y-1 p-2">
         <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm mb-1 flex-shrink-0 border border-white/20"
-          onClick={() => {
-            dispatch(startNewThread());
-          }}>
+          onClick={() => handleItemClick(() => dispatch(startNewThread()))}>
           <AiOutlinePlus className="h-4 w-4" />
           New chat
         </a>
         <div className="flex-col flex-1 overflow-y-auto border-b border-white/20">
           <div className="flex flex-col gap-2 pb-2 text-white  text-sm">
             {threads.filter(t => t.id !== null).map(thread => (
-              <ChatThread key={thread.id} title={thread.title} id={thread.id} />
+              <ChatThread 
+              key={thread.id} 
+              title={thread.title} 
+              id={thread.id} 
+              onClose={onClose}
+              />
             ))}
           </div>
         </div>
        <div className="mt-6">
-       <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm" onClick={() => {
+       <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm" 
+       onClick={() => {
           dispatch(deleteAllThreads())
         }}>
           <AiOutlineMessage className="h-4 w-4" />
@@ -141,7 +182,7 @@ const Sidebar = () => {
         </a>
        </div>
       </nav>
-    </div>
+    </div> 
   );
 };
 

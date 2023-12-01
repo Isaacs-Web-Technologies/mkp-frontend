@@ -7,11 +7,7 @@ const MobileSiderbar = (props) => {
   return (
     <div id="headlessui-portal-root display:hidden">
       <div data-headlessui-portal="">
-        <button
-          type="button"
-          aria-hidden="true"
-          className="fixed top-[1px] left-[1px] w-[1px] h-0 p-0 m-[-1px] overflow-hidden whitespace-nowrap border-0"
-        ></button>
+     
         <div>
           <div
             className="relative z-40"
@@ -27,6 +23,7 @@ const MobileSiderbar = (props) => {
                 id="headlessui-dialog-panel-:rf:"
                 data-headlessui-state="open"
               >
+                <Sidebar onClose={toggleComponentVisibility} />
                 <div className="absolute top-0 right-0 -mr-12 border-none pt-2 ">
                   <button
                     type="button"
