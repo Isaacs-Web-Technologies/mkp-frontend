@@ -100,7 +100,7 @@ const ChatThread = ({ title, id, onClose }) => {
 }
 
 const Sidebar = ({onClose,isMobileSidebarVisible }) => {
-  const [isSidebarClosed, setSidebarClosed] = useState(window.innerWidth <= 768 ? true : false);
+  const [isSidebarClosed, setSidebarClosed] = useState( false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const threads = useSelector(state => state.chat.threads);
   const router = useRouter();
@@ -110,6 +110,12 @@ const Sidebar = ({onClose,isMobileSidebarVisible }) => {
     setSidebarClosed(!isSidebarClosed);
    };
 
+  const handleOverlayClick = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+  
    useEffect(() =>{
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -131,17 +137,17 @@ const Sidebar = ({onClose,isMobileSidebarVisible }) => {
   return (
     <nav className={`sidebar overflow-hidden min-h-0 h-full flex-col space-y-1 p-0 flex-shrink h-100vh items-start bg-primary border-white/20 
     ${!isSidebarClosed ? 'w-14' : 'w-60'} 
-    ${isMobileSidebarVisible ? 'block' : 'hidden'} md:flex-col 
-    `}>
+    ${isMobileSidebarVisible ? 'block' : 'hidden'} md:flex-col`}
+  >
         {windowWidth > 768 && (
         <div className="toggle-button" onClick={toggleSidebar}>
           {isSidebarClosed ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
         </div>
           )}
 
-          {!isSidebarClosed && (
-            <div className="sidebar-overlay" onClick={toggleSidebar}></div>
-          )}
+            {!isSidebarClosed && (
+              <div className="sidebar-overlay" onClick={handleOverlayClick}></div>
+            )}
         <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm mb-1 flex-shrink-0 border border-white/20"
           onClick={() => handleItemClick(() => dispatch(startNewThread()))}>
           <AiOutlinePlus className="h-4 w-4" />
