@@ -6,7 +6,6 @@ const AxiosInstance = axios.create({
 });
 
 
-
 AxiosInstance.interceptors.request.use((config) => {
   // Retrieve the token from the cookie
   const token = Cookies.get("atoken");

@@ -66,7 +66,7 @@ const MobileSiderbar = () => {
             )}
           </div>
           <h1 className="text-center flex-1 text-base font-normal"></h1>
-          <div className="flex items-end justify-end ml-auto">
+          <div className="flex items-end justify-end ml-auto mr-1">
             <button
               type="button"
               className="h-10 w-10 mt-0.2 items-end justify-end rounded-md bg-primary hover:bg-primary/10 cursor-pointer focus:outline-none
