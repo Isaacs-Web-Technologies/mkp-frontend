@@ -274,7 +274,7 @@ const chatSlice = createSlice({
       }
       thread = {
         id: null,
-        title: "New Thread",
+        title: "New Recipe",
         messages: []
       };
       state.threads.splice(0, 0, thread);

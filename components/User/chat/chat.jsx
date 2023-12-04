@@ -1,8 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
-import { BsChevronDown, BsPlusLg } from "react-icons/bs";
-import { RxHamburgerMenu } from "react-icons/rx";
 import Message from "@/components/User/chat/messages";
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage, startNewThread } from '@/redux/chatSlice';
@@ -10,7 +8,7 @@ import { sendMessage, startNewThread } from '@/redux/chatSlice';
 
 
 const Chat = (props) => {
-  const {toggleComponentVisibility } = props;
+  const {handleToggleSidebar  } = props;
   const [message, setmessage] = useState('');
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
@@ -60,28 +58,8 @@ const handleCardClick =(messageText)=> {
 
 
   return (
-    <div className="flex max-w-full flex-1 h-100vh flex-col container  border border-black/10 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)]">
-      {/* hamburger menu for smaller screens and new chat */}
-      <div className="sticky top-0 z-10 flex items-center border-b  pl-1 pt-1 text-white-200 sm:pl-3 md:hidden">
-        <button
-          type="button"
-          className="-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary hover:bg-primary/10 cursor-pointer  focus:outline-none focus:ring-2 border-none"
-          onClick={toggleComponentVisibility}
-        >
-          <span className="sr-only">Open sidebar</span>
-          <RxHamburgerMenu className="h-6 w-6 text-red hover:text-black" />
-        </button>
-        <h1 className="flex-1 text-center text-base font-normal"></h1> {/* add chat thread title here later */}
-        <button 
-        type="button"
-        className="mr-0.5 h-10 w-10 items-center justify-center rounded-md bg-primary hover:bg-primary/10 cursor-pointer focus:outline-none focus:ring-2 border-none"
-        onClick={() => {
-          dispatch(startNewThread())
-        }}
-        >
-          <BsPlusLg className="h-6 w-6 text-red hover:text-black" />
-        </button>
-      </div>
+    <div className="flex max-w-full flex-1 h-100vh flex-col container mt-0 border border-black/10 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)]">
+     
 
       <div className="relative  w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
       {/* chat container */}
