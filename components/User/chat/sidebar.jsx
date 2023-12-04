@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
 import {
-  AiOutlineMessage,
   AiOutlinePlus,
   AiOutlineSetting,
   AiOutlineCheckCircle,
+  AiOutlineArrowLeft,
+  AiOutlineArrowRight
 } from "react-icons/ai";
+import { deleteThread,
+  startNewThread, 
+  editThreadTitle, 
+  getMessages
+  } from '@/redux/chatSlice';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { GiCancel } from "react-icons/gi";
 import { BiLinkExternal } from "react-icons/bi";
 import { FiMessageSquare, FiEdit2 } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteThread, startNewThread, editThreadTitle, getMessages, deleteAllThreads } from '@/redux/chatSlice';
 import { useRouter } from "next/navigation";
 import { performLogout } from "@/components/auth";
+import Link from "next/link";
 
-const ChatThread = ({ title, id }) => {
+
+
+
+const ChatThread = ({ title, id, onClose }) => {
   const dispatch = useDispatch();
   const isActive = useSelector(state => state.chat.activeThreadId === id);
   const [isEditing, setIsEditing] = useState(false);
@@ -45,10 +54,19 @@ const ChatThread = ({ title, id }) => {
     }
   };
 
+  const handleClick = () => {
+    dispatch(getMessages({ thread_id: id }));
+
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
-    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-red/10  cursor-pointer break-all hover:pr-4 group" style={style} onClick={() => {
-      dispatch(getMessages({thread_id: id}));
-    }}>
+    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md
+     hover:bg-red/10  cursor-pointer break-all hover:pr-4 group" 
+    style={style} 
+    onClick={handleClick}>
       <FiMessageSquare className="h-4 w-4" />
       {isEditing ? (
         <input
@@ -59,7 +77,8 @@ const ChatThread = ({ title, id }) => {
           className="rounded-lg border-none"
         />
       ) : (
-        <div style={{maxWidth: "65%"}} className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+        <div style={{maxWidth: "65%"}} className="flex-1 text-ellipsis max-h-5 
+        overflow-hidden break-all relative">
           {title}
         </div>
       )}
@@ -76,54 +95,85 @@ const ChatThread = ({ title, id }) => {
           </>
         ))}
       </div>
-      {/* <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-        {title}
-        <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
-      </div> */}
     </a>
   )
 }
 
-const Sidebar = () => {
+const Sidebar = ({onClose,isMobileSidebarVisible }) => {
+  const [isSidebarClosed, setSidebarClosed] = useState(window.innerWidth <= 768 ? true : false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const threads = useSelector(state => state.chat.threads);
   const router = useRouter();
   const dispatch = useDispatch();
+  
+  const toggleSidebar = () => {
+    setSidebarClosed(!isSidebarClosed);
+   };
+
+   useEffect(() =>{
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+   }, []);
+  
+
+  const handleItemClick = (action) => {
+    action();
+    if (onClose) {
+      onClose();
+    }
+  };
 
   return (
-    <div className="scrollbar-trigger flex h-100dvh w-full flex-1 items-start bg-primary border-white/20">
-      <nav className="flex h-full flex-1 flex-col space-y-1 p-2">
+    <nav className={`sidebar overflow-hidden min-h-0 h-full flex-col space-y-1 p-0 flex-shrink h-100vh items-start bg-primary border-white/20 
+    ${!isSidebarClosed ? 'w-14' : 'w-60'} 
+    ${isMobileSidebarVisible ? 'block' : 'hidden'} md:flex-col 
+    `}>
+        {windowWidth > 768 && (
+        <div className="toggle-button" onClick={toggleSidebar}>
+          {isSidebarClosed ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
+        </div>
+          )}
+
+          {!isSidebarClosed && (
+            <div className="sidebar-overlay" onClick={toggleSidebar}></div>
+          )}
         <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm mb-1 flex-shrink-0 border border-white/20"
-          onClick={() => {
-            dispatch(startNewThread());
-          }}>
+          onClick={() => handleItemClick(() => dispatch(startNewThread()))}>
           <AiOutlinePlus className="h-4 w-4" />
           New chat
         </a>
-        <div className="flex-col flex-1 overflow-y-auto border-b border-white/20">
-          <div className="flex flex-col gap-2 pb-2 text-white  text-sm">
-            {threads.filter(t => t.id !== null).map(thread => (
-              <ChatThread key={thread.id} title={thread.title} id={thread.id} />
+        
+        <div className="recipeHx flex-col flex-1  border-b border-white/20">
+          <div className="flex flex-col gap-2 pb-2  text-white  text-sm">
+            {[...threads].filter(t => t.id !== null).sort((a, b) => b.id - a.id).map(thread => (
+              <ChatThread 
+              key={thread.id} 
+              title={thread.title} 
+              id={thread.id} 
+              onClose={onClose}
+              />
             ))}
           </div>
         </div>
-        <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm" onClick={() => {
-          dispatch(deleteAllThreads())
-        }}>
-          <AiOutlineMessage className="h-4 w-4" />
-          Clear conversations
-        </a>
-        {/* <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm">
-          <AiOutlineUser className="h-4 w-4" />
-          My plan
-        </a> */}
-        <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm">
-          <AiOutlineSetting className="h-4 w-4" />
-          Settings
-        </a>
+       <div className=" mt-5 "
+       style={{ width: '14rem', transition: 'width 0.3s' }}>
+       <hr className="h-px mb-4 bg-red/10 border-0" />
+
+        <Link href="/Settings"
+           className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm">
+            <AiOutlineSetting className="h-4 w-4" />
+            Settings
+        </Link>
         <a
           href="https://forms.gle/SpRoNBwSgCddYQXB9"
           target="_blank"
-          className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm"
+          className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200
+           text-white cursor-pointer text-sm"
         >
           <BiLinkExternal className="h-4 w-4" />
           Feedback
@@ -138,8 +188,8 @@ const Sidebar = () => {
           <MdLogout className="h-4 w-4" />
           Log out
         </a>
-      </nav>
-    </div>
+       </div>
+      </nav> 
   );
 };
 
