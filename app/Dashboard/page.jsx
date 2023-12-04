@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import Chat from "@/components/User/chat/chat";
 import MobileSiderbar from "@/components/User/chat/mobileSidebar";
 import Sidebar from "@/components/User/chat/sidebar";

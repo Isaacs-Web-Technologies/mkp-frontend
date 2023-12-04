@@ -1,78 +1,12 @@
 "use client";
-
 import AxiosInstance from "@/components/axiosInstance";
 import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import * as Sentry from "@sentry/nextjs";
-
-
 import toast from "react-hot-toast";
 
-function shouldRefreshLogin() {
-    // Check if the access_token is expired,
-    // but the refresh_token is still valid
-    const atoken = Cookies.get('atoken');
-    const rtoken = Cookies.get('rtoken');
-
-    if (!atoken && rtoken) {
-        return true;
-    }
-}
-
-function shouldLogin() {
-    // Check if the access_token is expired,
-    // and the refresh_token is expired
-    const atoken = Cookies.get('atoken');
-    const rtoken = Cookies.get('rtoken');
-
-    if (!atoken && !rtoken) {
-        return true;
-    }
-}
-
-
-async function performLogout() {
-    // Handle user login
-    const response = await AxiosInstance.post('/auth/logout');
-
-    // handle response
-    console.log(response.data);
-
-    if (response.status === 200) {
-        Cookies.remove('atoken');
-        Cookies.remove('rtoken');
-        Cookies.remove('userType');
-        Cookies.remove('userName');
-        Cookies.remove('userId');
-        unloadSentryUser();
-    }
-}
-
-
-function saveCookies({atoken, atokenExpiry, rtoken, rtokenExpiry, userType, userName, userId}) {
-    // Convert the expiryTime to a timestamp
-    const atokenExpiryTimestamp = Date.parse(atokenExpiry);
-    const rtokenExpiryTimestamp = Date.parse(rtokenExpiry);
-
-    Cookies.set('atoken', atoken, {
-        expires: new Date(atokenExpiryTimestamp),
-    });
-    Cookies.set('rtoken', rtoken, {
-        expires: new Date(rtokenExpiryTimestamp),
-    });
-    Cookies.set('userType', userType, {
-        expires: new Date(atokenExpiryTimestamp),
-    });
-    Cookies.set('userName', userName, {
-        expires: new Date(atokenExpiryTimestamp),
-    });
-    Cookies.set('userId', userId, {
-        expires: new Date(atokenExpiryTimestamp),
-    });
-}
-
-
+// authentication functions
 async function performLogin({email, password}) {
     // Handle user login
     var response;
@@ -152,6 +86,58 @@ async function performSignUp({firstName, email, password}) {
     }
 }
 
+async function performLogout() {
+    // Handle user login
+    const response = await AxiosInstance.post('/auth/logout');
+
+    // handle response
+    console.log(response.data);
+
+    if (response.status === 200) {
+        Cookies.remove('atoken');
+        Cookies.remove('rtoken');
+        Cookies.remove('userType');
+        Cookies.remove('userName');
+        Cookies.remove('userId');
+        unloadSentryUser();
+    }
+}
+
+//cookies mgt 
+function saveCookies({atoken, atokenExpiry, rtoken, rtokenExpiry, userType, userName, userId}) {
+    // Convert the expiryTime to a timestamp
+    const atokenExpiryTimestamp = Date.parse(atokenExpiry);
+    const rtokenExpiryTimestamp = Date.parse(rtokenExpiry);
+
+    Cookies.set('atoken', atoken, {
+        expires: new Date(atokenExpiryTimestamp),
+    });
+    Cookies.set('rtoken', rtoken, {
+        expires: new Date(rtokenExpiryTimestamp),
+    });
+    Cookies.set('userType', userType, {
+        expires: new Date(atokenExpiryTimestamp),
+    });
+    Cookies.set('userName', userName, {
+        expires: new Date(atokenExpiryTimestamp),
+    });
+    Cookies.set('userId', userId, {
+        expires: new Date(atokenExpiryTimestamp),
+    });
+}
+
+//token refresh and utility management
+function shouldRefreshLogin() {
+    // Check if the access_token is expired,
+    // but the refresh_token is still valid
+    const atoken = Cookies.get('atoken');
+    const rtoken = Cookies.get('rtoken');
+
+    if (!atoken && rtoken) {
+        return true;
+    }
+}
+
 async function performRefreshLogin () {
     // Handle user login
     const response = await AxiosInstance.post('/auth/refresh', {}, {
@@ -174,19 +160,18 @@ async function performRefreshLogin () {
     }
 }
 
-function loadSentryUser() {
-    Sentry.setUser({
-        id: Cookies.get('userId'),
-        username: Cookies.get('userName'),
-    });
-    console.log("Sentry user loaded");
+function shouldLogin() {
+    // Check if the access_token is expired,
+    // and the refresh_token is expired
+    const atoken = Cookies.get('atoken');
+    const rtoken = Cookies.get('rtoken');
+
+    if (!atoken && !rtoken) {
+        return true;
+    }
 }
 
-function unloadSentryUser() {
-    Sentry.setUser(null);
-    console.log("Sentry user unloaded");
-}
-
+//userState mgt
 function useLoggedInUser(deps, loggedInRoute) {
     const router = useRouter();
     const pathName = usePathname();
@@ -220,5 +205,33 @@ function useLoggedInUser(deps, loggedInRoute) {
     }, deps);
     return isLoggedIn;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function loadSentryUser() {
+    Sentry.setUser({
+        id: Cookies.get('userId'),
+        username: Cookies.get('userName'),
+    });
+    console.log("Sentry user loaded");
+}
+
+function unloadSentryUser() {
+    Sentry.setUser(null);
+    console.log("Sentry user unloaded");
+}
+
+
 
 export { performLogin, performSignUp, performLogout, useLoggedInUser, loadSentryUser, unloadSentryUser };

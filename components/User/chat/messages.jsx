@@ -10,7 +10,7 @@ const Message = (props) => {
   const isUser = role === "user";
   return (
     <div 
-      className={`group w-full text-gray-800 dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50 ${
+      className={`group w-full text-gray-800  border-b border-black/10 ${
         isUser ? "" : "" 
       }`}
     >

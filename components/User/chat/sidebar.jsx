@@ -166,7 +166,7 @@ const Sidebar = ({onClose,isMobileSidebarVisible }) => {
             ))}
           </div>
         </div>
-       <div className=" mt-5 "
+       <div className="fixed top-[70%] mt-5 "
        style={{ width: '14rem', transition: 'width 0.3s' }}>
        <hr className="h-px mb-4 bg-red/10 border-0" />
 
