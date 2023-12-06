@@ -106,6 +106,7 @@ const Sidebar = ({ onClose, isMobileSidebarVisible }) => {
   const threads = useSelector(state => state.chat.threads);
   const router = useRouter();
   const dispatch = useDispatch();
+  const [displayWidth, setDisplayWidth] = useState(0);
 
   const toggleSidebar = () => {
     setSidebarClosed(!isSidebarClosed);
