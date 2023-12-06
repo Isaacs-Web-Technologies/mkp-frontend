@@ -59,6 +59,7 @@ const Chat = (props) => {
     setmessage('');
   };
 
+
   return (
     <div className="flex max-w-full flex-1 h-100vh flex-col container mt-0 border border-black/10 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)]">
 
