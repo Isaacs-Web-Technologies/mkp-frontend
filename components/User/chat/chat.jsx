@@ -8,7 +8,7 @@ import { sendMessage, startNewThread } from '@/redux/chatSlice';
 
 
 const Chat = (props) => {
-  const {handleToggleSidebar  } = props;
+  const { handleToggleSidebar } = props;
   const [message, setmessage] = useState('');
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,12 +16,12 @@ const Chat = (props) => {
   const activeThread = useSelector(state => state.chat.threads.find(t => t.id === activeThreadId));
   const messages = activeThread ? activeThread.messages : [];
   const messageListRef = useRef(null);
- 
+
   useEffect(() => {
     messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
   }, [messages]);
-  
- 
+
+
   useEffect(() => {
     if (activeThread === undefined) {
       dispatch(startNewThread());
@@ -34,82 +34,85 @@ const Chat = (props) => {
       dispatch(sendMessage({ message, thread_id: activeThreadId }));
       setmessage('');
     }
-   
-  };
-    
 
-const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
-useEffect(() => {
-  const handleResize =() => {
+  };
+
+
+  const [displayWidth, setDisplayWidth] = useState(0);
+  useEffect(() => {
     setDisplayWidth(window.innerWidth);
-  };
 
-  window.addEventListener("resize", handleResize);
-  return() =>{
-  window.removeEventListener("resize", handleResize);
-  };
-}, []);
+    const handleResize = () => {
+      setDisplayWidth(window.innerWidth);
+    };
 
-const handleCardClick =(messageText)=> {
-  setmessage(messageText);
-  dispatch(sendMessage({message: messageText,thread_id: activeThreadId }));
-  setmessage('');
-};
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleCardClick = (messageText) => {
+    setmessage(messageText);
+    dispatch(sendMessage({ message: messageText, thread_id: activeThreadId }));
+    setmessage('');
+  };
 
 
   return (
     <div className="flex max-w-full flex-1 h-100vh flex-col container mt-0 border border-black/10 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)]">
-     
+
 
       <div className="relative  w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
-      {/* chat container */}
-        
+        {/* chat container */}
+
         <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu" ref={messageListRef}>
-        {messages.length > 0 ? (
+          {messages.length > 0 ? (
             messages.map(message => (
-                <Message key={message.id} message={{role: message.sender, content: message.content}} />
+              <Message key={message.id} message={{ role: message.sender, content: message.content }} />
             ))
-        ) : (
-         
-          <div>
-            <div className="px-3  justify-center pt-2 pb-3 text-center text-xs md:px-4 md:pt-3 md:pb-6">  
-          {/* <div className="flex justify-center">
+          ) : (
+
+            <div>
+              <div className="px-3  justify-center pt-2 pb-3 text-center text-xs md:px-4 md:pt-3 md:pb-6">
+                {/* <div className="flex justify-center">
                     <img
                         src="/public/images/mkpLogo.png"
                         alt="MKP Logo" 
                        className="w-10 h-10 floatingImage"
                     />
                 </div> */}
-              <span>
+                <span>
                   <h1>My Kitchen Power</h1>
-              </span>
-              <span>
+                </span>
+                <span>
                   <p>Your kitchen assistant at your service</p>
-              </span>
-              <div className="cardContainer">
-              <div className="card" onClick={() => handleCardClick("How to make pizza?")}>
-                  <p className="typewriter">How to make pizza?</p>
+                </span>
+                <div className="cardContainer">
+                  <div className="card" onClick={() => handleCardClick("How to make pizza?")}>
+                    <p className="typewriter">How to make pizza?</p>
+                  </div>
+                  <div className="card" onClick={() => handleCardClick("What to cook eba?")}>
+                    <p className="typewriter">What to cook eba?</p>
+                  </div>
+                  <div className="card" onClick={() => handleCardClick("Give me kid-friendly snacks")}
+                    style={{ display: displayWidth <= 600 ? 'none' : 'block' }} >
+                    <p className="typewriter">Give me kid-friendly snacks</p>
+                  </div>
+                  <div className="card" onClick={() => handleCardClick("How do I cook banga soup?")}
+                    style={{ display: displayWidth <= 600 ? 'none' : 'block' }}>
+                    <p className="typewriter">How do I cook banga soup?</p>
+                  </div>
+                </div>
               </div>
-              <div className="card" onClick={() => handleCardClick("What to cook eba?")}>
-                  <p className="typewriter">What to cook eba?</p>
-              </div>
-              <div className="card" onClick={()=> handleCardClick("Give me kid-friendly snacks")}
-                 style ={{ display: displayWidth <= 600 ? 'none' : 'block' }} >
-                  <p className="typewriter">Give me kid-friendly snacks</p>
-              </div>
-              <div className="card" onClick={()=> handleCardClick("How do I cook banga soup?")}
-                 style={{ display: displayWidth <= 600 ? 'none' : 'block' }}>
-                  <p className="typewriter">How do I cook banga soup?</p>
-              </div>
-          </div>
-           </div>
-           </div>
-          
-     
-        )}
-    </div>
-       {/* input area */}
-       <div className=" bottom-0  w-full border-t md:border-t-0  md:border-transparent  md:bg-vert-light-gradient bg-white md:!bg-transparent pt-2">
+            </div>
+
+
+          )}
+        </div>
+        {/* input area */}
+        <div className=" bottom-0  w-full border-t md:border-t-0  md:border-transparent  md:bg-vert-light-gradient bg-white md:!bg-transparent pt-2">
           <form onSubmit={handleSubmit} className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
             <div className="relative flex flex-col h-full flex-1 items-stretch md:flex-col">
               {errorMessage ? (
@@ -132,8 +135,8 @@ const handleCardClick =(messageText)=> {
                       handleSubmit(e);
                       e.preventDefault();
                     }
-                  }}>                   
-                  </textarea>
+                  }}>
+                </textarea>
 
                 <button
                   onClick={handleSubmit}
