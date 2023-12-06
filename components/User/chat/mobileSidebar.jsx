@@ -12,6 +12,7 @@ const MobileSiderbar = () => {
   const activeThreadId = useSelector(state => state.chat.activeThreadId);
   const activeThread = useSelector(state => state.chat.threads.find(t => t.id === activeThreadId));
   const [isSidebarVisible, setSidebarVisible] = useState(false);
+  const [showToggle, setShowToggle] = useState(false);
 
   const handleToggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
@@ -22,6 +23,14 @@ const MobileSiderbar = () => {
       dispatch(startNewThread());
     }
   }, []);
+
+  useEffect(() => {
+    if (window.innerWidth <= 768) {
+      setShowToggle(true);
+    } else {
+      setShowToggle(false);
+    }
+  });
 
   useEffect(() => {
     // Set initial sidebar visibility based on screen width
@@ -56,7 +65,7 @@ const MobileSiderbar = () => {
       {!isSidebarVisible && (
         <div className="absolute z-40 flex items-center w-full">
           <div className="flex items-start justify-start ml-1">
-            {window.innerWidth <= 768 && (
+            {showToggle && (
               <button
                 type="button"
                 onClick={handleToggleSidebar}
