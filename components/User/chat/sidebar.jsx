@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from "react";
 import {
   AiOutlinePlus,
@@ -19,8 +20,8 @@ import { MdLogout } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from "next/navigation";
 import { performLogout } from "@/components/auth";
-import Link from "next/link";
-
+// import Link from "next/link";
+// import Settings from "@/components/User/chat/Settings";
 
 
 
@@ -134,6 +135,12 @@ const Sidebar = ({onClose,isMobileSidebarVisible }) => {
     }
   };
 
+  const [showSettings, setShowSettings] = useState(false);
+
+  // const handleSettingsClick = () => {
+  //   setShowSettings(!showSettings);
+  // };
+
   return (
     <nav className={`sidebar overflow-hidden min-h-0 h-full flex-col space-y-1 p-0 flex-shrink h-100vh items-start bg-primary border-white/20 
     ${!isSidebarClosed ? 'w-14' : 'w-60'} 
@@ -169,12 +176,15 @@ const Sidebar = ({onClose,isMobileSidebarVisible }) => {
        <div className="fixed top-[70%] mt-5 "
        style={{ width: '14rem', transition: 'width 0.3s' }}>
        <hr className="h-px mb-4 bg-red/10 border-0" />
+       {/* <a
+        onClick={handleSettingsClick}
+        className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm"
+      >
+        <AiOutlineSetting className="h-4 w-4" />
+        Settings
+      </a> */}
 
-        <Link href="/Settings"
-           className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-red/10 transition-colors duration-200 text-white cursor-pointer text-sm">
-            <AiOutlineSetting className="h-4 w-4" />
-            Settings
-        </Link>
+      {/* {<Settings />} */}
         <a
           href="https://forms.gle/SpRoNBwSgCddYQXB9"
           target="_blank"

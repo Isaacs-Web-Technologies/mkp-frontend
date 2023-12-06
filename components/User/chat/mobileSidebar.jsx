@@ -1,6 +1,7 @@
+'use client'
 import { IoMdClose } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { BsChevronDown, BsPlusLg } from "react-icons/bs";
+import { BsPlusLg } from "react-icons/bs";
 import { startNewThread } from '@/redux/chatSlice';
 import Sidebar from "./sidebar";
 import { useState, useEffect } from "react";
