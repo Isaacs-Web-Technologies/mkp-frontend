@@ -91,10 +91,10 @@ const Chat = (props) => {
                 </span>
                 <div className="cardContainer">
                   <div className="card" onClick={() => handleCardClick("How to make pizza?")}>
-                    <p className="typewriter">How to make pizza?</p>
+                    <p className="typewriter">Tell me how to make pizza</p>
                   </div>
                   <div className="card" onClick={() => handleCardClick("What to cook eba?")}>
-                    <p className="typewriter">What to cook eba?</p>
+                    <p className="typewriter">I want to cook eba</p>
                   </div>
                   <div className="card" onClick={() => handleCardClick("Give me kid-friendly snacks")}
                     style={{ display: displayWidth <= 600 ? 'none' : 'block' }} >
@@ -102,7 +102,7 @@ const Chat = (props) => {
                   </div>
                   <div className="card" onClick={() => handleCardClick("How do I cook banga soup?")}
                     style={{ display: displayWidth <= 600 ? 'none' : 'block' }}>
-                    <p className="typewriter">How do I cook banga soup?</p>
+                    <p className="typewriter">How do I cook banga soup</p>
                   </div>
                 </div>
               </div>
@@ -149,8 +149,8 @@ const Chat = (props) => {
           </form>
           {/* footer */}
           <div className="px-3 pt-2 pb-3 text-center text-xs text-black/50 md:px-4 md:pt-3 md:pb-6">
-            <span>
-              My Kitchen Power Is Solely For Recipes.
+           <span>
+             My Kitchen Power - Powered by <a href="https://www.isaacswebtechnologies.com" target="_blank">Isaacs Web Technologies</a>.
             </span>
           </div>
 
