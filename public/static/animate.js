@@ -1,8 +1,8 @@
 var word = [
     'How do I make chocolate chip cookies?',
     'Give me a vegan pasta recipe',
-    'Can I cook fried rice with these ingriedients?...',
-    'What kind of recipe can I prepare with these ingriedients...',
+    'Can I cook fried rice with these ingredients?...',
+    'What kind of recipe can I prepare with these ingredients...',
     'How about low-carb dinner options?',
     'Give me kid-friendly snacks',
     'Craving spicy Thai dishes?',
