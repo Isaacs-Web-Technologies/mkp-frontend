@@ -6,9 +6,11 @@ import { ExploreNigerianRecipies } from '@/components/landingPgComponents/explor
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar/NavBar'
 import SignUpPage from './signUp/page'
+import LandingPage from '@/components/landingPgComponents/landingPage'
 
 const Home = () => {
   return (
+    <LandingPage />
 //   <div>
 //     <section>
 //       <Navbar />
@@ -32,7 +34,8 @@ const Home = () => {
 //       <Footer />
 //     </section>
 //  </div>
- <SignUpPage />
+//  <SignUpPage />
+
   )
 }
 export default Home

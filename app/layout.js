@@ -3,6 +3,7 @@ import '../public/styles/globals.css';
 import { Toaster } from 'react-hot-toast';
 import Head from 'next/head';
 import { Providers } from '@/redux/provider';
+// import { useNavigation } from 'next/navigation';
 
 export const metadata = {
   title: "My Kitchen Power",
@@ -10,6 +11,8 @@ export const metadata = {
 };
 
 function RootLayout({ children }) {
+    // const navigation = useNavigation();
+    // const currentURL = `https://mykitchenpower.com${router.asPath}`
     return (
         <html lang="en">
             <Head>
@@ -19,7 +22,7 @@ function RootLayout({ children }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="robots" content="follow, index" />
-                <link rel="canonical" href="https://mykitchenpower-c3ab88b9a2f9.herokuapp.com/" />
+                {/* <link rel="canonical" href= {currentURL} /> */}
                 <meta name="language" content="EN" />
                 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 

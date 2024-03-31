@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 const Hero = () => {
   return (
-    <section className="hero">
-    <div className='content-overlay'>
+    <section className="herojkgh">
+    {/* <div className='content-overlay'>
       <h2 className=" text-2xl md:text-4xl lg:text-5xl mb-6">
         Discover new and exciting meal
         <br/> with My Kitchen Power faster than  ever
@@ -18,7 +18,7 @@ const Hero = () => {
         Search for meal
       </button>
     </Link>
-    </div> 
+    </div>  */}
   </section>
 );
 };

@@ -8,6 +8,21 @@ html {
     height:vh;
     justify-content: center;
     text-align: center;
+    
+}
+body{
+    position: relative;   
+    background-image: linear-gradient(to bottom,
+    rgba(0,0,0,1),
+    rgba(26, 13, 13, 0.801),
+    rgba(89, 45, 45, 0.744),
+    rgba(139, 66, 66, 0.838),
+    rgba(188, 58, 58, 0.546));
+    height: 100dvh;
+    background-size: cover;
+    margin:0%;
+    padding: 0px;
+    border:0px;
 }
 @media only screen and (max-width: 320px){
     .heroWriteup h3 {
@@ -97,21 +112,7 @@ html {
         font-weight: 50px;
     }
 }
-body{
-    position: relative;   
-    background-image: linear-gradient(to bottom,
-    rgba(0,0,0,1),
-    rgba(26, 13, 13, 0.801),
-    rgba(89, 45, 45, 0.744),
-    rgba(139, 66, 66, 0.838),
-    rgba(188, 58, 58, 0.546));
-    height: 100dvh;
-    background-size: cover;
-    margin:0%;
-    padding: 0px;
-    border:0px;
-    font-family: 'Quicksand', sans-serif;
-}
+
 .animate{
     display:flex;
     align-items: center;
