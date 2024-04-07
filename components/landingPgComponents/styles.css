@@ -1,16 +1,4 @@
-html {
-    margin: 0;
-    padding: 0;
-    background-image: url('heroImg.webp');
-    background-size: cover;
-    background-repeat: no-repeat; 
-    width: 100%;
-    height:vh;
-    justify-content: center;
-    text-align: center;
-    
-}
-body{
+/* body{
     position: relative;   
     background-image: linear-gradient(to bottom,
     rgba(0,0,0,1),
@@ -23,7 +11,7 @@ body{
     margin:0%;
     padding: 0px;
     border:0px;
-}
+}  */
 @media only screen and (max-width: 320px){
     .heroWriteup h3 {
         font-size: 1.4rem;
@@ -68,13 +56,33 @@ body{
         font-size: 1rem;
     }
 }
-.hero{
-    margin: 0px;
-    padding: 0px;
-    border: 0px; 
+.hero {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh; 
+    justify-content: center;
+    text-align: center;
+    background-image: url('heroImg.webp');
 }
+.gradientOverlay {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(26, 13, 13, 0.801), rgba(89, 45, 45, 0.744), rgba(139, 66, 66, 0.838), rgba(188, 58, 58, 0.546));
+  }
 .heroWriteup{
     border-radius: 0px;
+    position: relative;
+    z-index: 1;
     text-align:center;
     justify-content: center;
     color: #fff;
@@ -188,3 +196,4 @@ body{
 .md\:flex {
     display: flex; 
 }
+
