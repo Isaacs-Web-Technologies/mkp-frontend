@@ -16,6 +16,18 @@ function RootLayout({ children }) {
     return (
         <html lang="en">
             <Head>
+             {/*  Google tag (gtag.js)  */}
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-VDWLTTCHL9"></script>
+                <script
+                dangerouslySetInnerHTML={{
+                    __html: `
+                    window.dataLayer = window.dataLayer || [1;
+                        function gtag() {dataLayer.push(arguments) ;} gtag('js', new Date()) ;
+                        gtag ('config', 'G-VDWLTTCHL9');
+                                                     `,
+                }}
+                
+                />       
                 <title>{metadata.title}</title>
                 <meta name="description" content={metadata.description} />
                 <meta charSet="utf-8" />
