@@ -1,17 +1,11 @@
 
 "use client";
 import React, { useState } from "react";
-import AxiosInstance from "@/components/axiosInstance";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
-import GoogleIcon from "@/public/images/GoogleIcon.png"
-import Microsoft from "@/public/images/microsoft.png"
-import Apple from "@/public/images/apple.png"
 import MkpSignupImg from "@/public/images/mkpSignupImg.png"
 import Link from "next/link";
-import { resolve } from "styled-jsx/css";
 import { performSignUp, performLogin, useLoggedInUser } from "@/components/auth";
 import PasswordInput from "@/components/PasswordInput";
 
@@ -55,6 +49,7 @@ const SignUpPage = () => {
 
 
   return (
+    
      <>
     <div className="flex flex-col md:flex-row min-h-screen  bg-primary">
       <div className="flex flex-1  items-center justify-center m-0 px-4">
@@ -156,6 +151,7 @@ const SignUpPage = () => {
       </div>
     </div>
      </>
+    
   );
 }
 export default SignUpPage;

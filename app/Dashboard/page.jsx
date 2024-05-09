@@ -19,11 +19,14 @@ export default function Dashboard() {
 
 
   return (
+   
     <main className="overflow-hidden w-full h-screen relative flex">
       <MobileSiderbar />
       <Sidebar  />
       <Chat  />
     </main>
+   
+
   );
 }
 
