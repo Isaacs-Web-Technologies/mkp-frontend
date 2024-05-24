@@ -28,6 +28,12 @@ export default function RootLayout({ children }) {
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6822803825285284"
           crossorigin="anonymous"
         ></Script>
+        {/* New Monetag Script */}
+        <Script 
+        src="https://alwingulla.com/88/tag.min.js" 
+        data-zone="67241" 
+        async data-cfasync="false">
+        </Script>
       </head>
       <body>
         <main className="app">
